@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div>Information</div>
+        <form id="InfoForm" action="info">
+
+            <p>Mời nhập thông tin</p>
+            <table>
+                <tr>
+                    <td>Họ Tên:</td> 
+                    <td><input type="text" name="username" value="" /></td>
+                </tr>
+                <td>Năm Sinh:</td>
+                <td><input id = "inputYob" type="number" name="yob" min="0" /></td>
+                <tr>
+                    <td>Giới Tính: </td>
+                    <td> 
+                        <input type="radio" name="gender" id="M" value="Nam" />
+                        <label for="M">Nam</label>
+                        <input type="radio" name="gender" id="F" value="Nu" />
+                        <label for="F">Nu</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Khoa:</td>
+                    <td>    
+                <select id="department" name="department">
+                    <option value="">----- Select Department -----</option>
+                    <option value="SE">SE</option>
+                    <option value="AI">IA</option>
+                    <option value="Marketing">Marketing</option>
+                </select>
+                    </td>
+            </tr>
+                <tr>
+                    <td>So Thich: </td>
+                    <td> 
+                        <input type="checkbox" name="hobbies" id="sport" value="The Thao" />
+                        <label for="sport">The Thao</label>
+                        <input type="checkbox" name="hobbies" id="tourism" value="Du lich" />
+                        <label for="tourism">Du lich</label>
+                        <input type="checkbox" name="hobbies" id="read" value="Doc" />
+                        <label for="read">doc</label>
+                    </td>
+                </tr>
+            </table><br>
+            <input type ="submit" id="btnsubmit" value="submit">
+        </form>
+    </body>
+</html>
