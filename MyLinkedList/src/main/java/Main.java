@@ -75,5 +75,23 @@ public class Main {
             System.out.println("Khong tim thay gia tri " + y + " trong danh sach.");
         }
 
+        // Giả sử d là một Node đã được tìm thấy trước đó (Ví dụ: Node d = a.search(5);)
+        Node d = a.search(5);
+
+        if (d != null) {
+            Node pre = a.getPrev(d); // ĐÃ SỬA: Bỏ chữ "p:" đi, chỉ truyền vào biến d
+
+            if (pre != null) {
+                System.out.println("Previous node of " + d.info + ": " + pre.info);
+            } else {
+                System.out.println("Has not previous"); // ĐÃ SỬA: Bỏ chữ "x:" trong println
+            }
+        }
+        
+        
+        
+        
+        
+
     }
 }

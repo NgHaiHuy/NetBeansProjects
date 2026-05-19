@@ -199,4 +199,24 @@ public class MyList {
         // Nếu đã duyệt hết danh sách mà vẫn không tìm thấy Node p
         return -1;
     }
+    
+    // Hàm tìm và trả về Node đứng ngay trước Node p
+    public Node getPrev(Node p) {
+        // Nếu danh sách rỗng, hoặc Node p rỗng, hoặc p chính là nút đầu (không có nút trước)
+        if (isEmpty() || p == null || p == head) {
+            return null;
+        }
+
+        Node current = head;
+        // Duyệt danh sách để tìm xem nút nào có current.next chính là p
+        while (current != null) {
+            if (current.next == p) {
+                return current; // Tìm thấy nút đứng trước, trả về ngay
+            }
+            current = current.next; // Di chuyển sang Node kế tiếp
+        }
+
+        return null; // Không tìm thấy Node p trong danh sách
+    }
+
 }
