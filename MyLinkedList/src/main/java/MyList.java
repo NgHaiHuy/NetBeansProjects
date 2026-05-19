@@ -199,7 +199,7 @@ public class MyList {
         // Nếu đã duyệt hết danh sách mà vẫn không tìm thấy Node p
         return -1;
     }
-    
+
     // Hàm tìm và trả về Node đứng ngay trước Node p
     public Node getPrev(Node p) {
         // Nếu danh sách rỗng, hoặc Node p rỗng, hoặc p chính là nút đầu (không có nút trước)
@@ -217,6 +217,82 @@ public class MyList {
         }
 
         return null; // Không tìm thấy Node p trong danh sách
+    }
+
+    // Hàm trả về Node tại vị trí index i (bắt đầu từ 0)
+// Trả về null nếu vị trí i không hợp lệ (âm hoặc vượt quá số phần tử)
+    public Node get(int i) {
+        // Kiểm tra tính hợp lệ của index i
+        if (i < 0 || isEmpty()) {
+            return null;
+        }
+
+        int count = 0;      // Biến theo dõi vị trí hiện tại
+        Node current = head; // Bắt đầu duyệt từ đầu danh sách
+
+        // Duyệt danh sách đến khi hết hoặc đến đúng vị trí i cần tìm
+        while (current != null) {
+            if (count == i) {
+                return current; // Tìm thấy vị trí i, trả về Node này
+            }
+            count++;            // Tăng chỉ số vị trí
+            current = current.next; // Di chuyển sang Node kế tiếp
+        }
+
+        return null; // Trả về null nếu index i lớn hơn hoặc bằng size của list
+    }
+
+    // Hàm chèn một giá trị x vào ngay sau một Node p cho trước
+    public void insertAfter(Node p, int x) {
+        // Nếu Node p bị rỗng (null), không thể chèn đằng sau nó
+        if (p == null) {
+            System.out.println("Node p khong ton tai, khong the chen!");
+            return;
+        }
+
+        // Tạo một Node mới chứa giá trị x cần chèn
+        Node q = new Node(x);
+
+        // Bước 1: Cho Node mới trỏ tới phần tử đứng sau p hiện tại
+        q.next = p.next;
+
+        // Bước 2: Cập nhật lại Node p trỏ tới Node mới q
+        p.next = q;
+
+        // Trường hợp đặc biệt: Nếu p ban đầu là nút cuối cùng (tail), 
+        // thì bây giờ Node mới q sẽ trở thành nút cuối cùng mới.
+        if (p == tail) {
+            tail = q;
+        }
+    }
+
+    // Hàm chèn một giá trị x vào ngay trước Node p cho trước
+    public void insertBefore(Node p, int x) {
+        // Trường hợp 1: Nếu Node p bị rỗng hoặc danh sách rỗng, không thể chèn
+        if (p == null || isEmpty()) {
+            System.out.println("Node p khong ton tai hoac danh sach rong, khong the chen!");
+            return;
+        }
+
+        // Trường hợp 2: Nếu p chính là nút đầu tiên (head)
+        // Việc chèn vào trước head bản chất chính là hàm addFirst
+        if (p == head) {
+            addFirst(x);
+            return;
+        }
+
+        // Trường hợp 3: p nằm ở giữa hoặc cuối danh sách
+        // Đi tìm Node đứng ngay trước Node p
+        Node pre = getPrev(p); // Tái sử dụng hàm getPrev đã viết trước đó
+
+        // Nếu tìm thấy Node đứng trước
+        if (pre != null) {
+            Node q = new Node(x); // Tạo Node mới chứa giá trị x
+            q.next = p;           // Bước 1: Cho Node mới trỏ đến p
+            pre.next = q;         // Bước 2: Cho Node đứng trước trỏ đến Node mới
+        } else {
+            System.out.println("Node p khong thuoc danh sach nay!");
+        }
     }
 
 }
