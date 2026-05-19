@@ -156,5 +156,18 @@ public class Main {
             System.out.println("Khong tim thay Node co gia tri " + findVal + " de chen!");
         }
 
+        System.out.println("--- Thu nghiem ham insert theo index ---");
+        int targetIndex = 2; // Vị trí index muốn chèn vào (ví dụ vị trí số 2)
+        int insertValue = 55; // Giá trị mới muốn chèn vào
+
+        System.out.print("Danh sach truoc khi chen vao index " + targetIndex + ": ");
+        a.traverse();
+
+        // Gọi hàm chèn giá trị vào vị trí index cụ thể
+        a.insert(targetIndex, insertValue);
+
+        System.out.print("Danh sach sau khi chen vao index " + targetIndex + " : ");
+        a.traverse();
+
     }
 }

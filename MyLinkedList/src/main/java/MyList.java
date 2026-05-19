@@ -293,6 +293,51 @@ public class MyList {
         } else {
             System.out.println("Node p khong thuoc danh sach nay!");
         }
+
+    }
+
+        // Hàm chèn giá trị x vào vị trí index cho trước (vị trí bắt đầu từ 0)
+        public void insert(int index, int x) {
+        // Trường hợp 1: Vị trí index không hợp lệ (nhỏ hơn 0)
+        if (index < 0) {
+            System.out.println("Vi tri index khong hop le!");
+            return;
+        }
+
+        // Trường hợp 2: Chèn vào đầu danh sách (vị trí index bằng 0)
+        // Bản chất hành động này chính là hàm addFirst
+        if (index == 0) {
+            addFirst(x);
+            return;
+        }
+
+        // Trường hợp 3: Chèn vào các vị trí ở giữa hoặc ở cuối danh sách
+        int count = 0;
+        Node current = head;
+        Node pre = null; // Biến lưu Node đứng ngay trước vị trí cần chèn
+
+        // Tìm Node đang đứng ở vị trí index và Node đứng trước nó
+        while (current != null && count < index) {
+            pre = current;
+            current = current.next;
+            count++;
+        }
+
+        // Nếu count == index nghĩa là đã tìm được vị trí thích hợp để chèn
+        if (count == index) {
+            // Nếu pre khác null và current bằng null, bản chất là chèn vào ngay sau tail
+            if (pre == tail) {
+                addLast(x);
+            } else {
+                // Chèn vào giữa danh sách
+                Node q = new Node(x); // Tạo Node mới
+                q.next = current;     // Bước 1: Cho Node mới nối với Node phía sau (current)
+                pre.next = q;         // Bước 2: Cho Node phía trước (pre) nối với Node mới
+            }
+        } else {
+            // Trường hợp index truyền vào lớn hơn số lượng phần tử hiện có trong danh sách
+            System.out.println("Vi tri index vuot qua do dai danh sach!");
+        }
     }
 
 }
