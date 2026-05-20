@@ -84,7 +84,7 @@ public class loginServlet extends HttpServlet {
             out.println("<body>");
 
             if ("admin".equals(user) && "123".equals(pass)) {
-                out.println("<h1>Hello" + user + "</h1>");
+                out.println("<h1>Hello " + user + "</h1>");
             } else {
                 out.println("<h1 style='color:red;'>Wrong user name or password!</h1>");
                 out.println("<a href='login.html'>Retry</a>");

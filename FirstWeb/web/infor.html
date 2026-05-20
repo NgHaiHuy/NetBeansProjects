@@ -1,146 +1,160 @@
 <!DOCTYPE html>
 <html lang="vi">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Information Form</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css" type="text/css"/>
-    <style>
-        /* CSS Reset */
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Inter', sans-serif;
-        }
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Information Form</title>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <link rel="stylesheet" href="style.css" type="text/css"/>
+        <style>
+            /* CSS Reset */
+            * {
+                box-sizing: border-box;
+                margin: 0;
+                padding: 0;
+                font-family: 'Inter', sans-serif;
+            }
 
-        body {
-            background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 50%, #f0f9ff 100%);
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
+            body {
+                background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 50%, #f0f9ff 100%);
+                min-height: 100vh;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 20px;
+            }
 
-        .form-container {
-            background: rgba(255, 255, 255, 0.98);
-            padding: 40px;
-            border-radius: 24px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
-            width: 100%;
-            max-width: 450px;
-        }
+            .form-container {
+                background: rgba(255, 255, 255, 0.98);
+                padding: 40px;
+                border-radius: 24px;
+                box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+                width: 100%;
+                max-width: 450px;
+            }
 
-        h2 {
-            font-size: 24px;
-            font-weight: 600;
-            color: #111827;
-            margin-bottom: 8px;
-            text-align: center;
-        }
+            h2 {
+                font-size: 24px;
+                font-weight: 600;
+                color: #111827;
+                margin-bottom: 8px;
+                text-align: center;
+            }
 
-        .subtitle {
-            color: #6b7280;
-            font-size: 14px;
-            text-align: center;
-            margin-bottom: 24px;
-        }
+            .subtitle {
+                color: #6b7280;
+                font-size: 14px;
+                text-align: center;
+                margin-bottom: 24px;
+            }
 
-        .input-group {
-            position: relative;
-            margin-bottom: 16px;
-        }
+            .input-group {
+                position: relative;
+                margin-bottom: 16px;
+            }
 
-        .input-icon {
-            position: absolute;
-            left: 16px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #9ca3af;
-        }
+            .input-icon {
+                position: absolute;
+                left: 16px;
+                top: 50%;
+                transform: translateY(-50%);
+                color: #9ca3af;
+            }
 
-        input[type="text"],
-        input[type="number"],
-        select {
-            width: 100%;
-            padding: 14px 16px 14px 44px;
-            border: none;
-            border-radius: 12px;
-            background-color: #f3f4f6;
-            font-size: 15px;
-            color: #1f2937;
-            outline: none;
-            transition: box-shadow 0.2s;
-            appearance: none; /* Xóa mũi tên mặc định của select để tự style */
-        }
+            input[type="text"],
+            input[type="number"],
+            select {
+                width: 100%;
+                padding: 14px 16px 14px 44px;
+                border: none;
+                border-radius: 12px;
+                background-color: #f3f4f6;
+                font-size: 15px;
+                color: #1f2937;
+                outline: none;
+                transition: box-shadow 0.2s;
+                appearance: none; /* Xóa mũi tên mặc định của select để tự style */
+            }
 
-        input:focus, select:focus {
-            box-shadow: 0 0 0 2px #e5e7eb;
-        }
+            input:focus, select:focus {
+                box-shadow: 0 0 0 2px #e5e7eb;
+            }
 
-        /* Nút Submit */
-        .btn-primary {
-            width: 100%;
-            padding: 14px;
-            background-color: #1f2937;
-            color: white;
-            border: none;
-            border-radius: 12px;
-            font-size: 16px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: background-color 0.2s;
-            margin-top: 10px;
-        }
+            /* Nút Submit */
+            .btn-primary {
+                width: 100%;
+                padding: 14px;
+                background-color: #1f2937;
+                color: white;
+                border: none;
+                border-radius: 12px;
+                font-size: 16px;
+                font-weight: 500;
+                cursor: pointer;
+                transition: background-color 0.2s;
+                margin-top: 10px;
+            }
 
-        .btn-primary:hover {
-            background-color: #111827;
-        }
-    </style>
-</head>
-<body>
+            .btn-primary:hover {
+                background-color: #111827;
+            }
 
-    <div class="form-container">
-        <h2>Your Profile</h2>
-        <p class="subtitle">Please fill in your personal information</p>
+            .btn-home {
+                margin-top: 20px;
+                display: block;
+                text-decoration: none;
+                color: #6b7280;
+                font-size: 14px;
+            }
 
-        <form action="inforServlet" method="post">
-            
-            <div class="input-group">
-                <i class="fa-solid fa-user input-icon"></i>
-                <input type="text" name="fullName" placeholder="Full name" required>
-            </div>
+            .btn-home:hover {
+                text-decoration: underline;
+            }
+        </style>
+    </head>
+    <body>
 
-            <div class="input-group">
-                <i class="fa-solid fa-calendar input-icon"></i>
-                <input type="number" name="birthYear" placeholder="Year of birth" required>
-            </div>
+        <div class="form-container">
+            <h2>Your Profile</h2>
+            <p class="subtitle">Please fill in your personal information</p>
 
-            <div class="input-group">
-                <i class="fa-solid fa-venus-mars input-icon"></i>
-                <select name="gender" required>
-                    <option value="" disabled selected>Gender</option>
-                    <option value="Nam">Male</option>
-                    <option value="Nữ">Female</option>
-                </select>
-            </div>
+            <form action="inforServlet" method="post">
 
-            <div class="input-group">
-                <i class="fa-solid fa-graduation-cap input-icon"></i>
-                <input type="text" name="major" placeholder="Field of study" required>
-            </div>
+                <div class="input-group">
+                    <i class="fa-solid fa-user input-icon"></i>
+                    <input type="text" name="fullName" placeholder="Full name" required>
+                </div>
 
-            <div class="input-group">
-                <i class="fa-solid fa-heart input-icon"></i>
-                <input type="text" name="hobbies" placeholder="Hobby" required>
-            </div>
+                <div class="input-group">
+                    <i class="fa-solid fa-calendar input-icon"></i>
+                    <input type="number" name="birthYear" placeholder="Year of birth" required>
+                </div>
 
-            <button type="submit" class="btn-primary">Submit Information</button>
-        </form>
-    </div>
+                <div class="input-group">
+                    <i class="fa-solid fa-venus-mars input-icon"></i>
+                    <select name="gender" required>
+                        <option value="" disabled selected>Gender</option>
+                        <option value="Nam">Male</option>
+                        <option value="Nữ">Female</option>
+                    </select>
+                </div>
 
-</body>
+                <div class="input-group">
+                    <i class="fa-solid fa-graduation-cap input-icon"></i>
+                    <input type="text" name="major" placeholder="Field of study" required>
+                </div>
+
+                <div class="input-group">
+                    <i class="fa-solid fa-heart input-icon"></i>
+                    <input type="text" name="hobbies" placeholder="Hobby" required>
+                </div>
+
+                <button type="submit" class="btn-primary">Submit Information</button>
+
+                <a href="index.html" class="btn-home">Back to Home</a>
+            </form>
+        </div>
+
+    </body>
 </html>

@@ -1,9 +1,15 @@
+<%-- 
+    Document   : loginJSP
+    Created on : May 20, 2026, 8:11:12 AM
+    Author     : LECOO
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html lang="vi">
+<html>
     <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Login Web</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Login JSP Page</title>
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
@@ -21,6 +27,7 @@
                 background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 50%, #f0f9ff 100%);
                 min-height: 100vh;
                 display: flex;
+                flex-direction: column; /* Đổi sang column để kết quả in ra nằm phía dưới hợp lý */
                 align-items: center;
                 justify-content: center;
             }
@@ -34,21 +41,14 @@
                 width: 100%;
                 max-width: 400px;
                 text-align: center;
+                margin-bottom: 20px;
             }
 
             h2 {
                 font-size: 24px;
                 font-weight: 600;
                 color: #111827;
-                margin-bottom: 8px;
-            }
-
-            .subtitle {
-                color: #6b7280;
-                font-size: 14px;
-                line-height: 1.5;
-                margin-bottom: 24px;
-                padding: 0 10px;
+                margin-bottom: 24px; /* Tăng khoảng cách xuống dưới */
             }
 
             /* Nhóm ô nhập liệu (Input) */
@@ -65,20 +65,10 @@
                 color: #9ca3af;
             }
 
-            .toggle-password {
-                position: absolute;
-                right: 16px;
-                top: 50%;
-                transform: translateY(-50%);
-                color: #9ca3af;
-                cursor: pointer;
-            }
-
-            input[type="email"],
             input[type="text"],
             input[type="password"] {
                 width: 100%;
-                padding: 14px 16px 14px 44px; /* Chừa khoảng trống bên trái cho icon */
+                padding: 14px 16px 14px 44px;
                 border: none;
                 border-radius: 12px;
                 background-color: #f3f4f6;
@@ -90,22 +80,6 @@
 
             input:focus {
                 box-shadow: 0 0 0 2px #e5e7eb;
-            }
-
-            /* Quên mật khẩu */
-            .forgot-password {
-                text-align: right;
-                margin-bottom: 20px;
-            }
-
-            .forgot-password a {
-                color: #4b5563;
-                text-decoration: none;
-                font-size: 14px;
-            }
-
-            .forgot-password a:hover {
-                text-decoration: underline;
             }
 
             /* Nút Đăng nhập chính */
@@ -120,10 +94,27 @@
                 font-weight: 500;
                 cursor: pointer;
                 transition: background-color 0.2s;
+                margin-top: 10px;
             }
 
             .btn-primary:hover {
                 background-color: #111827;
+            }
+
+            /* Thêm CSS cho kết quả hiển thị */
+            .result-box {
+                font-weight: 600;
+                font-size: 16px;
+                padding: 10px 20px;
+                border-radius: 8px;
+            }
+            .success {
+                color: #16a34a;
+                background-color: #dcfce7;
+            }
+            .danger {
+                color: #dc2626;
+                background-color: #fee2e2;
             }
 
             .btn-home {
@@ -140,11 +131,11 @@
         </style>
     </head>
     <body>
-
         <div class="login-container">
             <h2>Sign in</h2>
 
-            <form action="loginServlet" method="post">
+            <!-- Đã thêm action="" (gửi lại chính nó) và method="post" -->
+            <form action="" method="post">
 
                 <div class="input-group">
                     <i class="fa-solid fa-user input-icon"></i>
@@ -154,7 +145,6 @@
                 <div class="input-group">
                     <i class="fa-solid fa-lock input-icon"></i>
                     <input type="password" name="Password" placeholder="Password" required>
-                    <i class="fa-solid fa-eye-slash toggle-password"></i>
                 </div>
 
                 <button type="submit" class="btn-primary">Login</button>
@@ -162,6 +152,23 @@
                 <a href="index.html" class="btn-home">Back to Home</a>
             </form>
         </div>
+
+        <%
+            // Kiểm tra nếu request gửi lên bằng phương thức POST (tức là khi bấm nút Login)
+            if ("POST".equalsIgnoreCase(request.getMethod())) {
+                request.setCharacterEncoding("UTF-8");
+                
+                String user = request.getParameter("Username");
+                String pass = request.getParameter("Password");
+                
+                // Đã sửa thành .equals() và thêm dấu chấm phẩy đầy đủ
+                if ("admin".equals(user) && "123".equals(pass)) {
+                    out.print("<div class='result-box success'>Hello " + user + "</div>");
+                } else {
+                    out.print("<div class='result-box danger'>Wrong user name or password!</div>");
+                }
+            }
+        %>
 
     </body>
 </html>
