@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Web</title>
+    <title>Information Form</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -16,24 +16,22 @@
             font-family: 'Inter', sans-serif;
         }
 
-        /* Làm nền gradient xanh */
         body {
             background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 50%, #f0f9ff 100%);
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
+            padding: 20px;
         }
 
-        /* Thẻ form chính màu trắng */
-        .login-container {
+        .form-container {
             background: rgba(255, 255, 255, 0.98);
             padding: 40px;
             border-radius: 24px;
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
             width: 100%;
-            max-width: 400px;
-            text-align: center;
+            max-width: 450px;
         }
 
         h2 {
@@ -41,17 +39,16 @@
             font-weight: 600;
             color: #111827;
             margin-bottom: 8px;
+            text-align: center;
         }
 
         .subtitle {
             color: #6b7280;
             font-size: 14px;
-            line-height: 1.5;
+            text-align: center;
             margin-bottom: 24px;
-            padding: 0 10px;
         }
 
-        /* Nhóm ô nhập liệu (Input) */
         .input-group {
             position: relative;
             margin-bottom: 16px;
@@ -65,20 +62,11 @@
             color: #9ca3af;
         }
 
-        .toggle-password {
-            position: absolute;
-            right: 16px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #9ca3af;
-            cursor: pointer;
-        }
-
-        input[type="email"],
         input[type="text"],
-        input[type="password"] {
+        input[type="number"],
+        select {
             width: 100%;
-            padding: 14px 16px 14px 44px; /* Chừa khoảng trống bên trái cho icon */
+            padding: 14px 16px 14px 44px;
             border: none;
             border-radius: 12px;
             background-color: #f3f4f6;
@@ -86,29 +74,14 @@
             color: #1f2937;
             outline: none;
             transition: box-shadow 0.2s;
+            appearance: none; /* Xóa mũi tên mặc định của select để tự style */
         }
 
-        input:focus {
+        input:focus, select:focus {
             box-shadow: 0 0 0 2px #e5e7eb;
         }
 
-        /* Quên mật khẩu */
-        .forgot-password {
-            text-align: right;
-            margin-bottom: 20px;
-        }
-
-        .forgot-password a {
-            color: #4b5563;
-            text-decoration: none;
-            font-size: 14px;
-        }
-
-        .forgot-password a:hover {
-            text-decoration: underline;
-        }
-
-        /* Nút Đăng nhập chính */
+        /* Nút Submit */
         .btn-primary {
             width: 100%;
             padding: 14px;
@@ -120,6 +93,7 @@
             font-weight: 500;
             cursor: pointer;
             transition: background-color 0.2s;
+            margin-top: 10px;
         }
 
         .btn-primary:hover {
@@ -129,24 +103,42 @@
 </head>
 <body>
 
-    <div class="login-container">
-        <h2>Sign in</h2>
+    <div class="form-container">
+        <h2>Your Profile</h2>
+        <p class="subtitle">Please fill in your personal information</p>
 
-        <form action="loginServlet" method="post">
+        <form action="inforServlet" method="post">
             
             <div class="input-group">
-                <!-- Đã đổi sang icon user hợp lý hơn -->
                 <i class="fa-solid fa-user input-icon"></i>
-                <input type="text" name="Username" placeholder="User name" required>
+                <input type="text" name="fullName" placeholder="Full name" required>
             </div>
 
             <div class="input-group">
-                <i class="fa-solid fa-lock input-icon"></i>
-                <input type="password" name="Password" placeholder="Password" required>
-                <i class="fa-solid fa-eye-slash toggle-password"></i>
+                <i class="fa-solid fa-calendar input-icon"></i>
+                <input type="number" name="birthYear" placeholder="Year of birth" required>
             </div>
 
-            <button type="submit" class="btn-primary">Get Started</button>
+            <div class="input-group">
+                <i class="fa-solid fa-venus-mars input-icon"></i>
+                <select name="gender" required>
+                    <option value="" disabled selected>Gender</option>
+                    <option value="Nam">Male</option>
+                    <option value="Nữ">Female</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <i class="fa-solid fa-graduation-cap input-icon"></i>
+                <input type="text" name="major" placeholder="Field of study" required>
+            </div>
+
+            <div class="input-group">
+                <i class="fa-solid fa-heart input-icon"></i>
+                <input type="text" name="hobbies" placeholder="Hobby" required>
+            </div>
+
+            <button type="submit" class="btn-primary">Submit Information</button>
         </form>
     </div>
 

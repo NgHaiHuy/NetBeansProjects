@@ -1,15 +1,108 @@
 <!DOCTYPE html>
-<!--
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit this template
--->
-<html>
-    <head>
-        <title>SE2022</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <div>Hello</div>
-    </body>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main Web</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        /* CSS Reset */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Nền gradient xanh đồng bộ với trang login */
+        body {
+            background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 50%, #f0f9ff 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Khung chứa chính */
+        .main-container {
+            background: rgba(255, 255, 255, 0.98);
+            padding: 40px;
+            border-radius: 24px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 24px;
+            font-weight: 600;
+            color: #111827;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            color: #6b7280;
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 32px;
+            padding: 0 10px;
+        }
+
+        /* Sắp xếp các nút theo chiều dọc */
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            gap: 16px; /* Khoảng cách giữa 2 nút */
+        }
+
+        /* Style chung cho nút bấm */
+        .my-button {
+            display: block;
+            width: 100%;
+            padding: 14px;
+            text-decoration: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        /* Nút chính (Login) - màu tối */
+        .btn-primary {
+            background-color: #1f2937;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #111827;
+        }
+
+        /* Nút phụ (Information) - màu sáng viền xám */
+        .btn-secondary {
+            background-color: white;
+            color: #1f2937;
+            border: 1px solid #e5e7eb;
+        }
+
+        .btn-secondary:hover {
+            background-color: #f9fafb;
+            border-color: #d1d5db;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="main-container">
+        <h2>Welcome to System</h2>
+        <p class="subtitle">Please select an option below to continue</p>
+
+        <div class="button-container">
+            <a href="login.html" class="my-button btn-primary">Go to login</a>
+            <a href="infor.html" class="my-button btn-secondary">Go to infor</a>
+        </div>
+    </div>
+
+</body>
 </html>
