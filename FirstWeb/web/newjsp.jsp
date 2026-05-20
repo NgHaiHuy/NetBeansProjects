@@ -12,6 +12,6 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <p><%= new java.util.Date() %></p> <!-- Mỗi lần bạn F5 làm mới trang, ngày giờ sẽ tự động cập nhật chính xác -->
     </body>
 </html>
