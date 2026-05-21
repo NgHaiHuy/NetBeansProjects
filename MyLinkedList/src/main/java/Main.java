@@ -4,7 +4,7 @@
  */
 
 /**
- *
+ * Lớp chạy thử nghiệm danh sách liên kết MyList
  * @author LECOO
  */
 public class Main {
@@ -12,195 +12,124 @@ public class Main {
     public static void main(String[] args) {
         MyList a = new MyList();
 
-        // Kiểm tra danh sách rỗng
-        System.out.println("Is empty: " + a.isEmpty());
+        System.out.println("=== THU NGHIEM KHOI TAO DANH SACH ===");
+        System.out.println("Danh sach rong? " + a.isEmpty());
 
-        // Thêm vào cuối
-        a.addLast(9);
+        // 1. Tạo danh sách ban đầu
+        int[] b = {9, 5, 3, 6, 1, 8};
+        a.addMany(b); // Thêm mảng vào cuối
+        a.addFirst(7); // Thêm 7 vào đầu
+
+        System.out.print("Danh sach ban dau: ");
         a.traverse();
+        System.out.println("Do dai danh sach: " + a.size());
+        System.out.println("----------------------------------------\n");
 
-        a.addLast(5);
-        a.traverse();
+        // 2. Thử nghiệm tìm kiếm và truy cập phần tử
+        System.out.println("=== THU NGHIEM TIM KIEM & TRUY CAP ===");
+        Node node5 = a.search(5);
+        System.out.println("- Tim kiem node co gia tri 5: " + (node5 != null ? "Tim thay (info = " + node5.info + ")" : "Khong tim thay"));
+        System.out.println("- Vi tri index cua node 5: " + a.pos(node5));
 
-        // Thêm nhiều phần tử vào cuối
-        int b[] = {3, 6, 1, 8};
-        a.addMany(b);
-        a.traverse();
-
-        // Thêm vào đầu
-        a.addFirst(7);
-        a.traverse();
-
-        // Thêm nhiều phần tử vào đầu
-        int c[] = {2, 6};
-        a.addManyFirst(c);
-        a.traverse();
-
-        System.out.println("--- Thu nghiem ham xoa ---");
-        // Giả sử danh sách đang có dữ liệu, tiến hành xóa đầu
-        System.out.print("Truoc khi xoa dau: ");
-        a.traverse();
-        a.removeFirst();
-        System.out.print("Sau khi xoa dau: ");
-        a.traverse();
-
-        // Tiến hành xóa cuối
-        a.removeLast();
-        System.out.print("Sau khi xoa cuoi: ");
-        a.traverse();
-
-        int x = 5;
-        Node n = a.search(x);
-
-        if (n != null) {
-            // Sử dụng dấu + để nối chuỗi thay vì dấu hai chấm :
-            System.out.println("Tim thay x: " + n.info);
-        } else {
-            System.out.println("Khong tim thay " + x + " trong danh sach.");
-        }
-        // In ra độ dài mảng
-        System.out.println("--- Thu nghiem ham size ---");
-        System.out.println("Do dai cua mang la: " + a.size());
-
-        // --- BỔ SUNG: Thử nghiệm hàm getFirst và getLast ---
-        System.out.println("--- Thu nghiem ham getFirst va getLast ---");
         Node firstNode = a.getFirst();
         Node lastNode = a.getLast();
-        System.out.println("Node dau tien (First Node) la: " + (firstNode != null ? firstNode.info : "null"));
-        System.out.println("Node cuoi cung (Last Node) la: " + (lastNode != null ? lastNode.info : "null"));
+        System.out.println("- Node dau tien: " + (firstNode != null ? firstNode.info : "null"));
+        System.out.println("- Node cuoi cung: " + (lastNode != null ? lastNode.info : "null"));
 
-        System.out.println("--- Thu nghiem ham pos ---");
+        Node prevOf5 = a.getPrev(node5);
+        Node nextOf5 = a.getNext(node5);
+        System.out.println("- Node dung truoc 5: " + (prevOf5 != null ? prevOf5.info : "null"));
+        System.out.println("- Node dung sau 5: " + (nextOf5 != null ? nextOf5.info : "null"));
 
-        int y = 5;
-        // 1. Tìm Node có giá trị bằng 5
-        n = a.search(y);
+        Node nodeAtIndex2 = a.get(2);
+        System.out.println("- Node tai vi tri index 2: " + (nodeAtIndex2 != null ? nodeAtIndex2.info : "null"));
+        System.out.println("----------------------------------------\n");
 
-        if (n != null) {
-            // 2. Tìm vị trí của Node n vừa tìm được
-            int viTri = a.pos(n);
-            System.out.println("Node co gia tri " + y + " nam o vi tri index: " + viTri);
-        } else {
-            System.out.println("Khong tim thay gia tri " + y + " trong danh sach.");
-        }
-
-        // Giả sử d là một Node đã được tìm thấy trước đó (Ví dụ: Node d = a.search(5);)
-        System.out.println("--- Thu nghiem ham getPrev theo node truoc do ---");
-        Node d = a.search(5);
-
-        if (d != null) {
-            Node pre = a.getPrev(d); // ĐÃ SỬA: Bỏ chữ "p:" đi, chỉ truyền vào biến d
-
-            if (pre != null) {
-                System.out.println("Node truoc cua " + d.info + " la: " + pre.info);
-            } else {
-                System.out.println("Khong co node truoc"); // ĐÃ SỬA: Bỏ chữ "x:" trong println
-            }
-        }
-
-        // --- BỔ SUNG: Thử nghiệm hàm getNext ---
-        System.out.println("--- Thu nghiem ham getNext theo node truoc do ---");
-        if (d != null) {
-            Node nextNode = a.getNext(d);
-            if (nextNode != null) {
-                System.out.println("Node sau cua " + d.info + " la: " + nextNode.info);
-            } else {
-                System.out.println("Khong co node sau (day la node cuoi cung)");
-            }
-        }
-
-        System.out.println("--- Thu nghiem ham get theo index ---");
-        int indexToFind = 2; // Ví dụ tìm phần tử tại vị trí số 2 (phần tử thứ 3)
-        Node resultNode = a.get(indexToFind);
-
-        if (resultNode != null) {
-            System.out.println("Node tai index " + indexToFind + " co gia tri la: " + resultNode.info);
-        } else {
-            System.out.println("Vi tri index " + indexToFind + " khong hop le hoac vuot qua do dai danh sach.");
-        }
-
-        System.out.println("--- Thu nghiem ham insertAfter ---");
-        int valueToFind = 3; // Tìm Node có giá trị bằng 3 để chèn đằng sau nó
-        int newValue = 9;   // Giá trị mới muốn chèn vào danh sách
-
-        Node targetNode = a.search(valueToFind);
-
-        if (targetNode != null) {
-            System.out.print("Danh sach truoc khi chen sau " + valueToFind + ": ");
-            a.traverse();
-
-            // Gọi hàm chèn giá trị newValue ra sau targetNode
-            a.insertAfter(targetNode, newValue);
-
-            System.out.print("Danh sach sau khi chen sau " + valueToFind + " : ");
-            a.traverse();
-        } else {
-            System.out.println("Khong tim thay Node co gia tri " + valueToFind + " de chen!");
-        }
-
-        System.out.println("--- Thu nghiem ham insertBefore ---");
-        int findVal = 6;     // Tìm Node có giá trị bằng 6 để chèn đằng trước nó
-        int insertVal = 8;  // Giá trị mới muốn chèn vào danh sách
-
-        Node targetBefore = a.search(findVal);
-
-        if (targetBefore != null) {
-            System.out.print("Danh sach truoc khi chen truoc " + findVal + ": ");
-            a.traverse();
-
-            // Gọi hàm chèn giá trị insertVal ra trước targetBefore
-            a.insertBefore(targetBefore, insertVal);
-
-            System.out.print("Danh sach sau khi chen truoc " + findVal + " : ");
-            a.traverse();
-        } else {
-            System.out.println("Khong tim thay Node co gia tri " + findVal + " de chen!");
-        }
-
-        System.out.println("--- Thu nghiem ham insert theo index ---");
-        int targetIndex = 2; // Vị trí index muốn chèn vào (ví dụ vị trí số 2)
-        int insertValue = 5; // Giá trị mới muốn chèn vào
-
-        System.out.print("Danh sach truoc khi chen vao index " + targetIndex + ": ");
+        // 3. Thử nghiệm chèn phần tử
+        System.out.println("=== THU NGHIEM CHEN PHAN TU ===");
+        System.out.print("Danh sach truoc khi chen: ");
         a.traverse();
 
-        // Gọi hàm chèn giá trị vào vị trí index cụ thể
-        a.insert(targetIndex, insertValue);
-
-        System.out.print("Danh sach sau khi chen vao index " + targetIndex + " : ");
-        a.traverse();
-        
-        System.out.println("--- Thu nghiem ham removeNodeP ---");
-        // Giả sử d là một đối tượng Node hợp lệ đã được khởi tạo trước đó
-        System.out.println("Remove node " + d.info);
-        // SỬA TẠI ĐÂY: Bỏ chữ "p:" đi, chỉ truyền biến d vào làm tham số
-        a.remove(d);
-        // Duyệt và in lại danh sách sau khi xóa để kiểm tra kết quả
+        // insertAfter: Chèn sau node 5
+        System.out.println("- Chen 99 vao sau node 5:");
+        a.insertAfter(node5, 99);
+        System.out.print(" -> Ket qua: ");
         a.traverse();
 
-        System.out.println("--- Thu nghiem ham remove theo index ---");
-        int index = 3; // Ví dụ xóa phần tử tại vị trí số 3 (trong danh sách hiện tại là giá trị 7)
-        System.out.print("Danh sach truoc khi xoa tai index " + index + ": ");
-        a.traverse();
-        a.removeIndex(index);
-        System.out.print("Danh sach sau khi xoa tai index " + index + " : ");
+        // insertBefore: Chèn trước node 5
+        System.out.println("- Chen 88 vao truoc node 5:");
+        a.insertBefore(node5, 88);
+        System.out.print(" -> Ket qua: ");
         a.traverse();
 
-        System.out.println("--- Thu nghiem ham removeAfter ---");
-        int findValRemoveAfter = 5; // Tìm Node có giá trị bằng 55 để xóa phần tử sau nó
-        Node targetRemoveAfter = a.search(findValRemoveAfter);
+        // insert tai index i
+        System.out.println("- Chen 55 vao vi tri index 2:");
+        a.insert(2, 55);
+        System.out.print(" -> Ket qua: ");
+        a.traverse();
+        System.out.println("----------------------------------------\n");
 
-        if (targetRemoveAfter != null) {
-            System.out.print("Danh sach truoc khi xoa sau " + findValRemoveAfter + ": ");
-            a.traverse();
+        // 4. Thử nghiệm xóa phần tử
+        System.out.println("=== THU NGHIEM XOA PHAN TU ===");
+        System.out.print("Danh sach truoc khi xoa: ");
+        a.traverse();
 
-            // Gọi hàm xóa phần tử đứng sau Node targetRemoveAfter
-            a.removeAfter(targetRemoveAfter);
+        // removeFirst: Xóa phần tử đầu tiên
+        System.out.println("- Xoa phan tu dau tien (removeFirst):");
+        a.removeFirst();
+        System.out.print(" -> Ket qua: ");
+        a.traverse();
 
-            System.out.print("Danh sach sau khi xoa sau " + findValRemoveAfter + " : ");
-            a.traverse();
-        } else {
-            System.out.println("Khong tim thay Node co gia tri " + findValRemoveAfter + " de xoa phan tu phia sau!");
-        }
+        // removeLast: Xóa phần tử cuối cùng
+        System.out.println("- Xoa phan tu cuoi cung (removeLast):");
+        a.removeLast();
+        System.out.print(" -> Ket qua: ");
+        a.traverse();
 
+        // remove(Node p): Xóa node cụ thể (xóa node 5)
+        System.out.println("- Xoa truc tiep node 5 (remove node p):");
+        a.remove(node5);
+        System.out.print(" -> Ket qua: ");
+        a.traverse();
+
+        // removeIndex: Xóa theo index
+        System.out.println("- Xoa phan tu tai index 3 (removeIndex):");
+        a.removeIndex(3);
+        System.out.print(" -> Ket qua: ");
+        a.traverse();
+
+        // removeAfter: Xóa phần tử sau node 88
+        Node node88 = a.search(88);
+        System.out.println("- Xoa phan tu dung sau node 88 (removeAfter):");
+        a.removeAfter(node88);
+        System.out.print(" -> Ket qua: ");
+        a.traverse();
+
+        // removeBefore: Xóa phần tử trước node 6
+        Node node6 = a.search(6);
+        System.out.println("- Xoa phan tu dung truoc node 6 (removeBefore):");
+        a.removeBefore(node6);
+        System.out.print(" -> Ket qua: ");
+        a.traverse();
+        System.out.println("----------------------------------------\n");
+
+        // 5. Thử nghiệm cập nhật giá trị (set)
+        System.out.println("=== THU NGHIEM CAP NHAT PHAN TU (SET) ===");
+        System.out.print("Danh sach truoc khi set: ");
+        a.traverse();
+        Node nodeToSet = a.search(6);
+        System.out.println("- Cap nhat node co gia tri 6 thanh 66:");
+        a.set(nodeToSet, 66);
+        System.out.print(" -> Ket qua: ");
+        a.traverse();
+        System.out.println("----------------------------------------\n");
+
+        // 6. Thử nghiệm tìm giá trị lớn nhất và nhỏ nhất
+        System.out.println("=== THU NGHIEM TIM MAX & MIN ===");
+        Node maxNode = a.findMax();
+        Node minNode = a.findMin();
+        System.out.println("- Node co gia tri lon nhat: " + (maxNode != null ? maxNode.info : "null"));
+        System.out.println("- Node co gia tri nho nhat: " + (minNode != null ? minNode.info : "null"));
+        System.out.println("----------------------------------------");
     }
 }

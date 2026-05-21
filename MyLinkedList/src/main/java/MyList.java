@@ -4,7 +4,7 @@
  */
 
 /**
- *
+ * Lớp triển khai cấu trúc dữ liệu danh sách liên kết đơn
  * @author LECOO
  */
 public class MyList {
@@ -23,7 +23,7 @@ public class MyList {
         head = tail = null;
     }
 
-    // 1. Thêm một phần tử vào cuối danh sách
+    // 1. Thêm vào cuối danh sách
     public void addLast(int x) {
         Node q = new Node(x);
         if (isEmpty()) {
@@ -34,7 +34,7 @@ public class MyList {
         }
     }
 
-    // 2. Thêm một phần tử vào đầu danh sách
+    // 2. Thêm vào đầu danh sách
     public void addFirst(int x) {
         Node q = new Node(x);
         if (isEmpty()) {
@@ -45,14 +45,14 @@ public class MyList {
         }
     }
 
-    // 3. Thêm một mảng vào cuối danh sách
+    // 3. Thêm nhiều phần tử vào cuối danh sách
     public void addMany(int a[]) {
-        for (int i = 0; i < a.length; i++) {
-            addLast(a[i]);
+        for (int x : a) {
+            addLast(x);
         }
     }
 
-    // 4. Thêm một mảng vào đầu danh sách (giữ nguyên thứ tự mảng)
+    // 4. Thêm nhiều phần tử vào đầu danh sách (giữ nguyên thứ tự mảng)
     public void addManyFirst(int a[]) {
         for (int i = a.length - 1; i >= 0; i--) {
             addFirst(a[i]);
@@ -69,374 +69,238 @@ public class MyList {
         System.out.println();
     }
 
-    // Phương thức xóa phần tử ở đầu danh sách liên kết
+    // 6. Xóa phần tử ở đầu danh sách
     public void removeFirst() {
-        // Trường hợp 1: Danh sách rỗng, không có gì để xóa
-        if (isEmpty()) {
-            System.out.println("Danh sách rỗng, không thể xóa!");
-            return; // Kết thúc phương thức
-        }
-
-        // Trường hợp 2: Danh sách chỉ có duy nhất 1 phần tử
+        if (isEmpty()) return;
         if (head == tail) {
-            head = tail = null; // Xóa xong thì danh sách trở thành rỗng
-        } // Trường hợp 3: Danh sách có từ 2 phần tử trở lên
-        else {
-            head = head.next; // Dịch chuyển head sang nút tiếp theo để bỏ qua nút đầu cũ
+            head = tail = null;
+        } else {
+            head = head.next;
         }
     }
 
-    // Phương thức xóa phần tử ở cuối danh sách liên kết
+    // 7. Xóa phần tử ở cuối danh sách
     public void removeLast() {
-        // Trường hợp 1: Danh sách rỗng, không có gì để xóa
-        if (isEmpty()) {
-            System.out.println("Danh sách rỗng, không thể xóa!");
-            return; // Kết thúc phương thức
-        }
-
-        // Trường hợp 2: Danh sách chỉ có duy nhất 1 phần tử
+        if (isEmpty()) return;
         if (head == tail) {
-            head = tail = null; // Xóa xong thì danh sách trở thành rỗng
-        } // Trường hợp 3: Danh sách có từ 2 phần tử trở lên
-        else {
-            Node p = head;
-            // Dùng vòng lặp để tìm nút nằm ngay trước nút cuối cùng (nút áp chót)
-            // Điều kiện dừng là p.next phải chính là tail
-            while (p.next != tail) {
-                p = p.next; // Dịch chuyển con trỏ p tiến về phía trước
+            head = tail = null;
+        } else {
+            Node pre = getPrev(tail);
+            if (pre != null) {
+                pre.next = null;
+                tail = pre;
             }
-
-            // Sau vòng lặp, p đang đứng ở nút áp chót
-            p.next = null; // Ngắt kết nối từ nút áp chót đến nút cuối cũ
-            tail = p;      // Cập nhật lại con trỏ tail chính là nút p (nút áp chót cũ)
         }
     }
 
-    // Hàm trả về đối tượng Node đầu tiên của danh sách
+    // 8. Lấy Node đầu tiên
     public Node getFirst() {
-        // Nếu danh sách rỗng, không có Node nào để trả về
-        if (isEmpty()) {
-            return null;
-        }
-        // Trả về đối tượng Node mà con trỏ head đang quản lý
         return head;
     }
 
-    // Hàm trả về đối tượng Node cuối cùng của danh sách
+    // 9. Lấy Node cuối cùng
     public Node getLast() {
-        // Nếu danh sách rỗng, không có Node nào để trả về
-        if (isEmpty()) {
-            return null;
-        }
-        // Trả về đối tượng Node mà con trỏ tail đang quản lý
         return tail;
     }
 
-    // Hàm tìm kiếm và trả về Node đầu tiên có thuộc tính info bằng với x
+    // 10. Tìm Node đầu tiên có giá trị bằng x
     public Node search(int x) {
-        // Tạo một con trỏ p bắt đầu từ đầu danh sách (head) để đi duyệt
         Node p = head;
-
-        // Duyệt qua từng Node trong danh sách cho đến khi hết (p == null)
         while (p != null) {
-            // Nếu tìm thấy Node có phần dữ liệu (info) trùng với giá trị x cần tìm
-            if (p.info == x) {
-                return p; // Trả về ngay Node đó và kết thúc hàm
-            }
-            p = p.next; // Di chuyển con trỏ p sang Node tiếp theo
+            if (p.info == x) return p;
+            p = p.next;
         }
-
-        // Nếu đã duyệt hết danh sách mà không tìm thấy Node nào thỏa mãn
         return null;
     }
 
-    // Hàm đếm và trả về số lượng Node hiện có trong danh sách
+    // 11. Đếm và trả về số lượng Node
     public int size() {
-        int count = 0;      // Khởi tạo biến đếm bằng 0
-        Node p = head;      // Bắt đầu duyệt từ đầu danh sách (head)
-
-        // Vòng lặp chạy đến khi nào đi qua hết Node cuối cùng (p thành null)
+        int count = 0;
+        Node p = head;
         while (p != null) {
-            count++;        // Tăng biến đếm lên 1 với mỗi Node tìm thấy
-            p = p.next;     // Di chuyển sang Node kế tiếp
+            count++;
+            p = p.next;
         }
-
-        return count;       // Trả về tổng số lượng Node đã đếm được
+        return count;
     }
 
-    // Hàm trả về Node đứng ngay sau Node p cho trước
+    // 12. Lấy Node đứng sau Node p
     public Node getNext(Node p) {
-        // Nếu Node truyền vào bị rỗng (null), không thể lấy phần tử kế tiếp thì return Null
-        if (p == null) {
-            return null;
-        }
-        // Trả về liên kết đến Node tiếp theo của p
-        return p.next;
+        return (p == null) ? null : p.next;
     }
 
-    // Hàm trả về vị trí (index) của Node p trong danh sách (bắt đầu từ 0)
-// Nếu không tìm thấy Node p trong danh sách, hàm trả về -1
+    // 13. Lấy vị trí (index) của Node p
     public int pos(Node p) {
-        // Nếu Node truyền vào bị rỗng, trả về -1 ngay lập tức
-        if (p == null) {
-            return -1;
-        }
-
-        int index = 0;      // Biến lưu vị trí hiện tại, bắt đầu từ 0
-        Node current = head; // Dùng con trỏ current bắt đầu duyệt từ đầu danh sách (head)
-
-        // Duyệt qua từng Node cho đến hết danh sách
+        if (p == null) return -1;
+        int index = 0;
+        Node current = head;
         while (current != null) {
-            // So sánh địa chỉ vùng nhớ (current == p) để xem có đúng là Node cần tìm không
-            if (current == p) {
-                return index; // Tìm thấy, trả về vị trí index ngay lập tức
-            }
-
-            index++;             // Tăng vị trí lên 1 để chuẩn bị kiểm tra phần tử tiếp theo
-            current = current.next; // Di chuyển con trỏ sang Node kế tiếp
+            if (current == p) return index;
+            index++;
+            current = current.next;
         }
-
-        // Nếu đã duyệt hết danh sách mà vẫn không tìm thấy Node p
         return -1;
     }
 
-    // Hàm tìm và trả về Node đứng ngay trước Node p
+    // 14. Tìm Node đứng ngay trước Node p
     public Node getPrev(Node p) {
-        // Nếu danh sách rỗng, hoặc Node p rỗng, hoặc p chính là nút đầu (không có nút trước)
-        if (isEmpty() || p == null || p == head) {
-            return null;
-        }
-
+        if (isEmpty() || p == null || p == head) return null;
         Node current = head;
-        // Duyệt danh sách để tìm xem nút nào có current.next chính là p
         while (current != null) {
-            if (current.next == p) {
-                return current; // Tìm thấy nút đứng trước, trả về ngay
-            }
-            current = current.next; // Di chuyển sang Node kế tiếp
+            if (current.next == p) return current;
+            current = current.next;
         }
-
-        return null; // Không tìm thấy Node p trong danh sách
+        return null;
     }
 
-    // Hàm trả về Node tại vị trí index i (bắt đầu từ 0)
-// Trả về null nếu vị trí i không hợp lệ (âm hoặc vượt quá số phần tử)
+    // 15. Lấy Node tại vị trí index i
     public Node get(int i) {
-        // Kiểm tra tính hợp lệ của index i
-        if (i < 0 || isEmpty()) {
-            return null;
-        }
-
-        int count = 0;      // Biến theo dõi vị trí hiện tại
-        Node current = head; // Bắt đầu duyệt từ đầu danh sách
-
-        // Duyệt danh sách đến khi hết hoặc đến đúng vị trí i cần tìm
-        while (current != null) {
-            if (count == i) {
-                return current; // Tìm thấy vị trí i, trả về Node này
-            }
-            count++;            // Tăng chỉ số vị trí
-            current = current.next; // Di chuyển sang Node kế tiếp
-        }
-
-        return null; // Trả về null nếu index i lớn hơn hoặc bằng size của list
-    }
-
-    // Hàm chèn một giá trị x vào ngay sau một Node p cho trước
-    public void insertAfter(Node p, int x) {
-        // Nếu Node p bị rỗng (null), không thể chèn đằng sau nó
-        if (p == null) {
-            System.out.println("Node p khong ton tai, khong the chen!");
-            return;
-        }
-
-        // Tạo một Node mới chứa giá trị x cần chèn
-        Node q = new Node(x);
-
-        // Bước 1: Cho Node mới trỏ tới phần tử đứng sau p hiện tại
-        q.next = p.next;
-
-        // Bước 2: Cập nhật lại Node p trỏ tới Node mới q
-        p.next = q;
-
-        // Trường hợp đặc biệt: Nếu p ban đầu là nút cuối cùng (tail), 
-        // thì bây giờ Node mới q sẽ trở thành nút cuối cùng mới.
-        if (p == tail) {
-            tail = q;
-        }
-    }
-
-    // Hàm chèn một giá trị x vào ngay trước Node p cho trước
-    public void insertBefore(Node p, int x) {
-        // Trường hợp 1: Nếu Node p bị rỗng hoặc danh sách rỗng, không thể chèn
-        if (p == null || isEmpty()) {
-            System.out.println("Node p khong ton tai hoac danh sach rong, khong the chen!");
-            return;
-        }
-
-        // Trường hợp 2: Nếu p chính là nút đầu tiên (head)
-        // Việc chèn vào trước head bản chất chính là hàm addFirst
-        if (p == head) {
-            addFirst(x);
-            return;
-        }
-
-        // Trường hợp 3: p nằm ở giữa hoặc cuối danh sách
-        // Đi tìm Node đứng ngay trước Node p
-        Node pre = getPrev(p); // Tái sử dụng hàm getPrev đã viết trước đó
-
-        // Nếu tìm thấy Node đứng trước
-        if (pre != null) {
-            Node q = new Node(x); // Tạo Node mới chứa giá trị x
-            q.next = p;           // Bước 1: Cho Node mới trỏ đến p
-            pre.next = q;         // Bước 2: Cho Node đứng trước trỏ đến Node mới
-        } else {
-            System.out.println("Node p khong thuoc danh sach nay!");
-        }
-
-    }
-
-    // Hàm chèn giá trị x vào vị trí index cho trước (vị trí bắt đầu từ 0)
-    public void insert(int index, int x) {
-        // Trường hợp 1: Vị trí index không hợp lệ (nhỏ hơn 0)
-        if (index < 0) {
-            System.out.println("Vi tri index khong hop le!");
-            return;
-        }
-
-        // Trường hợp 2: Chèn vào đầu danh sách (vị trí index bằng 0)
-        // Bản chất hành động này chính là hàm addFirst
-        if (index == 0) {
-            addFirst(x);
-            return;
-        }
-
-        // Trường hợp 3: Chèn vào các vị trí ở giữa hoặc ở cuối danh sách
+        if (i < 0 || isEmpty()) return null;
         int count = 0;
         Node current = head;
-        Node pre = null; // Biến lưu Node đứng ngay trước vị trí cần chèn
-
-        // Tìm Node đang đứng ở vị trí index và Node đứng trước nó
-        while (current != null && count < index) {
-            pre = current;
-            current = current.next;
+        while (current != null) {
+            if (count == i) return current;
             count++;
+            current = current.next;
         }
-
-        // Nếu count == index nghĩa là đã tìm được vị trí thích hợp để chèn
-        if (count == index) {
-            // Nếu pre khác null và current bằng null, bản chất là chèn vào ngay sau tail
-            if (pre == tail) {
-                addLast(x);
-            } else {
-                // Chèn vào giữa danh sách
-                Node q = new Node(x); // Tạo Node mới
-                q.next = current;     // Bước 1: Cho Node mới nối với Node phía sau (current)
-                pre.next = q;         // Bước 2: Cho Node phía trước (pre) nối với Node mới
-            }
-        } else {
-            // Trường hợp index truyền vào lớn hơn số lượng phần tử hiện có trong danh sách
-            System.out.println("Vi tri index vuot qua do dai danh sach!");
-        }
-
+        return null;
     }
 
-    // Hàm xóa một Node p cho trước khỏi danh sách liên kết
-    public void remove(Node p) {
-        // Trường hợp 1: Node p rỗng hoặc danh sách rỗng thì không làm gì cả
-        if (p == null || isEmpty()) {
-            System.out.println("Node khong hop le hoac danh sach rong!");
-            return;
-        }
+    // 16. Chèn giá trị x vào ngay sau Node p
+    public void insertAfter(Node p, int x) {
+        if (p == null) return;
+        Node q = new Node(x);
+        q.next = p.next;
+        p.next = q;
+        if (p == tail) tail = q;
+    }
 
-        // Trường hợp 2: Node p cần xóa chính là Node đầu tiên (head)
+    // 17. Chèn giá trị x vào ngay trước Node p
+    public void insertBefore(Node p, int x) {
+        if (p == null) return;
         if (p == head) {
-            head = head.next; // Cho head nhảy sang Node kế tiếp
-            if (head == null) { // Nếu sau khi xóa, danh sách trở nên rỗng
-                tail = null;    // Cập nhật luôn tail bằng null
-            }
-            return;
-        }
-
-        // Trường hợp 3: Node p nằm ở giữa hoặc cuối danh sách
-        // Tìm Node đứng ngay trước Node p
-        Node pre = head;
-        while (pre != null && pre.next != p) {
-            pre = pre.next;
-        }
-
-        // Nếu tìm thấy Node đứng trước Node p (nghĩa là p thực sự nằm trong list)
-        if (pre != null) {
-            pre.next = p.next; // Bỏ qua p, nối thẳng Node phía trước tới Node phía sau p
-
-            // Nếu Node p cần xóa ban đầu là Node cuối cùng (tail)
-            if (p == tail) {
-                tail = pre; // Cập nhật lại tail là Node đứng trước nó
-            }
+            addFirst(x);
         } else {
-            System.out.println("Node p khong ton tai trong danh sach!");
+            Node pre = getPrev(p);
+            if (pre != null) insertAfter(pre, x);
         }
     }
 
-    // Hàm xóa phần tử tại vị trí index (vị trí bắt đầu từ 0)
-    public void removeIndex(int index) {
-        // Trường hợp 1: Danh sách rỗng hoặc vị trí index không hợp lệ (âm)
-        if (isEmpty() || index < 0) {
-            System.out.println("Danh sach rong hoac vi tri index khong hop le!");
-            return;
-        }
-
-        // Trường hợp 2: Xóa phần tử đầu tiên (index == 0)
-        // Bản chất hành động này là hàm removeFirst
+    // 18. Chèn giá trị x vào vị trí index cụ thể
+    public void insert(int index, int x) {
+        if (index < 0) return;
         if (index == 0) {
+            addFirst(x);
+        } else {
+            Node pre = get(index - 1);
+            if (pre != null) insertAfter(pre, x);
+        }
+    }
+
+    // 19. Xóa Node p khỏi danh sách
+    public void remove(Node p) {
+        if (isEmpty() || p == null) return;
+        if (p == head) {
+            removeFirst();
+        } else {
+            Node pre = getPrev(p);
+            if (pre != null) removeAfter(pre);
+        }
+    }
+
+    // 20. Xóa phần tử tại vị trí index
+    public void removeIndex(int index) {
+        if (isEmpty() || index < 0) return;
+        if (index == 0) {
+            removeFirst();
+        } else {
+            Node pre = get(index - 1);
+            if (pre != null) removeAfter(pre);
+        }
+    }
+
+    // 21. Xóa phần tử đứng sau Node p
+    public void removeAfter(Node p) {
+        if (p == null || p == tail || p.next == null) return;
+        Node q = p.next;
+        p.next = q.next;
+        if (q == tail) tail = p;
+    }
+
+    // 22. Xóa phần tử đứng trước Node p
+    public void removeBefore(Node p) {
+        if (isEmpty() || p == null || p == head) return;
+        if (head.next == p) {
             removeFirst();
             return;
         }
-
-        int count = 0;
-        Node current = head;
-        Node pre = null;
-
-        // Duyệt danh sách để tìm Node tại vị trí index và Node đứng trước nó
-        while (current != null && count < index) {
-            pre = current;
-            current = current.next;
-            count++;
-        }
-
-        // Nếu tìm thấy Node tại vị trí index (current != null)
-        if (current != null) {
-            // Cho Node phía trước nối qua Node phía sau của Node cần xóa
-            pre.next = current.next;
-
-            // Nếu Node cần xóa là Node cuối cùng (tail)
-            if (current == tail) {
-                tail = pre; // Cập nhật lại tail là Node đứng trước nó
-            }
-        } else {
-            // Trường hợp index vượt quá độ dài danh sách
-            System.out.println("Vi tri index vuot qua do dai danh sach!");
+        Node pre = getPrev(p);
+        if (pre != null) {
+            Node prePre = getPrev(pre);
+            if (prePre != null) removeAfter(prePre);
         }
     }
 
-    // Hàm xóa phần tử đứng ngay sau một Node p cho trước
-    public void removeAfter(Node p) {
-        // Trường hợp 1: Node p bị rỗng hoặc p chính là nút cuối cùng (không có phần tử đứng sau)
-        if (p == null || p == tail || p.next == null) {
-            System.out.println("Node p khong hop le hoac khong co phan tu dung sau!");
-            return;
+    // 23. Cập nhật giá trị của Node p thành x
+    public void set(Node p, int x) {
+        if (p != null) {
+            p.info = x;
         }
+    }
 
-        // Node q là phần tử đứng ngay sau p (phần tử cần xóa)
-        Node q = p.next;
+    // 24. Tìm Node có giá trị lớn nhất
+    public Node findMax() {
+        if (isEmpty()) return null;
+        Node max = head;
+        Node cur = head.next;
+        while (cur != null) {
+            if (cur.info > max.info) {
+                max = cur;
+            }
+            cur = cur.next;
+        }
+        return max;
+    }
 
-        // Bước 1: Cho Node p trỏ thẳng đến phần tử đứng sau q
-        p.next = q.next;
+    // 25. Tìm Node có giá trị nhỏ nhất
+    public Node findMin() {
+        if (isEmpty()) return null;
+        Node min = head;
+        Node cur = head.next;
+        while (cur != null) {
+            if (cur.info < min.info) {
+                min = cur;
+            }
+            cur = cur.next;
+        }
+        return min;
+    }
+    // 26. Hoán đổi giá trị của hai Node p và q (swap info)
+    public void swap(Node p, Node q) {
+        if (p == null || q == null) return;
+        int temp = p.info;
+        p.info = q.info;
+        q.info = temp;
+    }
 
-        // Trường hợp đặc biệt: Nếu phần tử cần xóa q chính là nút cuối cùng (tail)
-        // thì bây giờ p sẽ trở thành nút cuối cùng mới.
-        if (q == tail) {
-            tail = p;
+    // 27. Sắp xếp danh sách từ node st đến node end (inclusive) bằng thuật toán selection sort
+    public void sort(Node st, Node end) {
+        if (st == null || end == null) return;
+        Node i = st;
+        while (i != null && i != end) {
+            Node min = i;
+            Node j = i.next;
+            while (j != null && j != end.next) {
+                if (j.info < min.info) {
+                    min = j;
+                }
+                j = j.next;
+            }
+            if (min != i) {
+                swap(i, min);
+            }
+            i = i.next;
         }
     }
 }
+
