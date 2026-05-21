@@ -139,7 +139,7 @@ public class Main {
 
         System.out.println("--- Thu nghiem ham insertBefore ---");
         int findVal = 6;     // Tìm Node có giá trị bằng 6 để chèn đằng trước nó
-        int insertVal = 88;  // Giá trị mới muốn chèn vào danh sách
+        int insertVal = 8;  // Giá trị mới muốn chèn vào danh sách
 
         Node targetBefore = a.search(findVal);
 
@@ -158,7 +158,7 @@ public class Main {
 
         System.out.println("--- Thu nghiem ham insert theo index ---");
         int targetIndex = 2; // Vị trí index muốn chèn vào (ví dụ vị trí số 2)
-        int insertValue = 55; // Giá trị mới muốn chèn vào
+        int insertValue = 5; // Giá trị mới muốn chèn vào
 
         System.out.print("Danh sach truoc khi chen vao index " + targetIndex + ": ");
         a.traverse();
@@ -168,6 +168,39 @@ public class Main {
 
         System.out.print("Danh sach sau khi chen vao index " + targetIndex + " : ");
         a.traverse();
+        
+        System.out.println("--- Thu nghiem ham removeNodeP ---");
+        // Giả sử d là một đối tượng Node hợp lệ đã được khởi tạo trước đó
+        System.out.println("Remove node " + d.info);
+        // SỬA TẠI ĐÂY: Bỏ chữ "p:" đi, chỉ truyền biến d vào làm tham số
+        a.remove(d);
+        // Duyệt và in lại danh sách sau khi xóa để kiểm tra kết quả
+        a.traverse();
+
+        System.out.println("--- Thu nghiem ham remove theo index ---");
+        int index = 3; // Ví dụ xóa phần tử tại vị trí số 3 (trong danh sách hiện tại là giá trị 7)
+        System.out.print("Danh sach truoc khi xoa tai index " + index + ": ");
+        a.traverse();
+        a.removeIndex(index);
+        System.out.print("Danh sach sau khi xoa tai index " + index + " : ");
+        a.traverse();
+
+        System.out.println("--- Thu nghiem ham removeAfter ---");
+        int findValRemoveAfter = 5; // Tìm Node có giá trị bằng 55 để xóa phần tử sau nó
+        Node targetRemoveAfter = a.search(findValRemoveAfter);
+
+        if (targetRemoveAfter != null) {
+            System.out.print("Danh sach truoc khi xoa sau " + findValRemoveAfter + ": ");
+            a.traverse();
+
+            // Gọi hàm xóa phần tử đứng sau Node targetRemoveAfter
+            a.removeAfter(targetRemoveAfter);
+
+            System.out.print("Danh sach sau khi xoa sau " + findValRemoveAfter + " : ");
+            a.traverse();
+        } else {
+            System.out.println("Khong tim thay Node co gia tri " + findValRemoveAfter + " de xoa phan tu phia sau!");
+        }
 
     }
 }

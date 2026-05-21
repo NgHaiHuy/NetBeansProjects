@@ -296,8 +296,8 @@ public class MyList {
 
     }
 
-        // Hàm chèn giá trị x vào vị trí index cho trước (vị trí bắt đầu từ 0)
-        public void insert(int index, int x) {
+    // Hàm chèn giá trị x vào vị trí index cho trước (vị trí bắt đầu từ 0)
+    public void insert(int index, int x) {
         // Trường hợp 1: Vị trí index không hợp lệ (nhỏ hơn 0)
         if (index < 0) {
             System.out.println("Vi tri index khong hop le!");
@@ -338,6 +338,105 @@ public class MyList {
             // Trường hợp index truyền vào lớn hơn số lượng phần tử hiện có trong danh sách
             System.out.println("Vi tri index vuot qua do dai danh sach!");
         }
+
     }
 
+    // Hàm xóa một Node p cho trước khỏi danh sách liên kết
+    public void remove(Node p) {
+        // Trường hợp 1: Node p rỗng hoặc danh sách rỗng thì không làm gì cả
+        if (p == null || isEmpty()) {
+            System.out.println("Node khong hop le hoac danh sach rong!");
+            return;
+        }
+
+        // Trường hợp 2: Node p cần xóa chính là Node đầu tiên (head)
+        if (p == head) {
+            head = head.next; // Cho head nhảy sang Node kế tiếp
+            if (head == null) { // Nếu sau khi xóa, danh sách trở nên rỗng
+                tail = null;    // Cập nhật luôn tail bằng null
+            }
+            return;
+        }
+
+        // Trường hợp 3: Node p nằm ở giữa hoặc cuối danh sách
+        // Tìm Node đứng ngay trước Node p
+        Node pre = head;
+        while (pre != null && pre.next != p) {
+            pre = pre.next;
+        }
+
+        // Nếu tìm thấy Node đứng trước Node p (nghĩa là p thực sự nằm trong list)
+        if (pre != null) {
+            pre.next = p.next; // Bỏ qua p, nối thẳng Node phía trước tới Node phía sau p
+
+            // Nếu Node p cần xóa ban đầu là Node cuối cùng (tail)
+            if (p == tail) {
+                tail = pre; // Cập nhật lại tail là Node đứng trước nó
+            }
+        } else {
+            System.out.println("Node p khong ton tai trong danh sach!");
+        }
+    }
+
+    // Hàm xóa phần tử tại vị trí index (vị trí bắt đầu từ 0)
+    public void removeIndex(int index) {
+        // Trường hợp 1: Danh sách rỗng hoặc vị trí index không hợp lệ (âm)
+        if (isEmpty() || index < 0) {
+            System.out.println("Danh sach rong hoac vi tri index khong hop le!");
+            return;
+        }
+
+        // Trường hợp 2: Xóa phần tử đầu tiên (index == 0)
+        // Bản chất hành động này là hàm removeFirst
+        if (index == 0) {
+            removeFirst();
+            return;
+        }
+
+        int count = 0;
+        Node current = head;
+        Node pre = null;
+
+        // Duyệt danh sách để tìm Node tại vị trí index và Node đứng trước nó
+        while (current != null && count < index) {
+            pre = current;
+            current = current.next;
+            count++;
+        }
+
+        // Nếu tìm thấy Node tại vị trí index (current != null)
+        if (current != null) {
+            // Cho Node phía trước nối qua Node phía sau của Node cần xóa
+            pre.next = current.next;
+
+            // Nếu Node cần xóa là Node cuối cùng (tail)
+            if (current == tail) {
+                tail = pre; // Cập nhật lại tail là Node đứng trước nó
+            }
+        } else {
+            // Trường hợp index vượt quá độ dài danh sách
+            System.out.println("Vi tri index vuot qua do dai danh sach!");
+        }
+    }
+
+    // Hàm xóa phần tử đứng ngay sau một Node p cho trước
+    public void removeAfter(Node p) {
+        // Trường hợp 1: Node p bị rỗng hoặc p chính là nút cuối cùng (không có phần tử đứng sau)
+        if (p == null || p == tail || p.next == null) {
+            System.out.println("Node p khong hop le hoac khong co phan tu dung sau!");
+            return;
+        }
+
+        // Node q là phần tử đứng ngay sau p (phần tử cần xóa)
+        Node q = p.next;
+
+        // Bước 1: Cho Node p trỏ thẳng đến phần tử đứng sau q
+        p.next = q.next;
+
+        // Trường hợp đặc biệt: Nếu phần tử cần xóa q chính là nút cuối cùng (tail)
+        // thì bây giờ p sẽ trở thành nút cuối cùng mới.
+        if (q == tail) {
+            tail = p;
+        }
+    }
 }
