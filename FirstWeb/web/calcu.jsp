@@ -219,7 +219,7 @@
         <div class="main-container">
             <h2>Calculator</h2>
 
-            <form action="" method="post">
+            <form action="calcusevlet_2" method="post">
                 <!-- Ô nhập số x -->
                 <div class="input-group">
                     <label for="numX">Input X</label>
@@ -250,12 +250,6 @@
                     <a href="calcu.jsp" class="btn btn-reset">Reset</a>
                 </div>
             </form>
-
-            <!-- Box hiển thị đáp án ở dưới cùng -->
-            <div class="result-container">
-                <div class="result-title">Result</div>
-                <div class="result-value"><%= resultStr %></div>
-            </div>
 
             <a href="index.html" class="btn-home">Back to Home</a>
         </div>
