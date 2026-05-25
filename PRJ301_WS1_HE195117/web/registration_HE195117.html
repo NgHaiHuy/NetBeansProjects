@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Course Registration</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <h1>Online Course Registration System</h1>
+    <form action="registerServlet_HE195117" method="GET" id="registerForm">
+        <!-- Họ và tên sinh viên -->
+        <p>
+            <label for="name">Student Name:</label><br>
+            <input type="text" id="name" name="name" placeholder="Enter student name" required>
+        </p>
+
+        <!-- Địa chỉ email -->
+        <p>
+            <label for="email">Email:</label><br>
+            <input type="email" id="email" name="email" placeholder="Enter email address" required>
+        </p>
+
+        <!-- Hình thức học tập mong muốn -->
+        <p>
+            <label>Preferred Learning Mode:</label><br>
+            <input type="radio" id="online" name="mode" value="Online" checked>
+            <label for="online">Online</label>
+            <input type="radio" id="offline" name="mode" value="Offline">
+            <label for="offline">Offline</label>
+            <input type="radio" id="hybrid" name="mode" value="Hybrid">
+            <label for="hybrid">Hybrid</label>
+        </p>
+
+        <!-- Các chương trình học quan tâm -->
+        <p>
+            <label>Program of Interest (Select 1 to 3 programs):</label><br>
+            <input type="checkbox" id="prog1" name="program" value="Software Engineering">
+            <label for="prog1">Software Engineering</label><br>
+            <input type="checkbox" id="prog2" name="program" value="Artificial Intelligence">
+            <label for="prog2">Artificial Intelligence</label><br>
+            <input type="checkbox" id="prog3" name="program" value="Cyber Security">
+            <label for="prog3">Cyber Security</label><br>
+            <input type="checkbox" id="prog4" name="program" value="Information Assurance">
+            <label for="prog4">Information Assurance</label><br>
+            <input type="checkbox" id="prog5" name="program" value="Internet of Things (IoT)">
+            <label for="prog5">Internet of Things (IoT)</label>
+        </p>
+
+        <!-- Các nút điều khiển Form -->
+        <p>
+            <input type="reset" value="Reset">
+            <input type="submit" value="Register">
+        </p>
+    </form>
+</body>
+</html>

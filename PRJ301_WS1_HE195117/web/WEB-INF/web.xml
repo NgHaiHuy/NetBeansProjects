@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+         version="3.1">
+
+    <description>Workshop 1 PRJ301 - Online Course Registration System</description>
+
+    <!-- Context Parameters -->
+    <context-param>
+        <description>Allowed domains for student email validation</description>
+        <param-name>allowedDomain</param-name>
+        <param-value>fpt.edu.vn;fe.edu.vn;fsoft.com.vn</param-value>
+    </context-param>
+    <context-param>
+        <description>Minimum character length for student name</description>
+        <param-name>minStudentNameLength</param-name>
+        <param-value>5</param-value>
+    </context-param>
+    <context-param>
+        <description>Maximum courses a student can register for</description>
+        <param-name>maxCoursesPerStudent</param-name>
+        <param-value>3</param-value>
+    </context-param>
+
+    <!-- Welcome File -->
+    <welcome-file-list>
+        <welcome-file>registration_HE195117.html</welcome-file>
+    </welcome-file-list>
+
+    <!-- Servlet 1 - RegisterServlet_HE195117 -->
+    <servlet>
+        <servlet-name>RegisterServlet_HE195117</servlet-name>
+        <servlet-class>controller.RegisterServlet_HE195117</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>RegisterServlet_HE195117</servlet-name>
+        <url-pattern>/registerServlet_HE195117</url-pattern>
+    </servlet-mapping>
+
+    <!-- Servlet 2 - CourseDetailServlet_HE195117 -->
+    <servlet>
+        <servlet-name>CourseDetailServlet_HE195117</servlet-name>
+        <servlet-class>controller.CourseDetailServlet_HE195117</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CourseDetailServlet_HE195117</servlet-name>
+        <url-pattern>/courseDetailServlet_HE195117</url-pattern>
+    </servlet-mapping>
+
+    <!-- Servlet 3 - ConfirmRegistrationServlet_HE195117 -->
+    <servlet>
+        <servlet-name>ConfirmRegistrationServlet_HE195117</servlet-name>
+        <servlet-class>controller.ConfirmRegistrationServlet_HE195117</servlet-class>
+        <!-- Tham số khởi tạo cho servlet này -->
+        <init-param>
+            <param-name>centerName</param-name>
+            <param-value>FPT Training Center</param-value>
+        </init-param>
+        <init-param>
+            <param-name>supportEmail</param-name>
+            <param-value>registration_support@fpt.edu.vn</param-value>
+        </init-param>
+        <init-param>
+            <param-name>hotline</param-name>
+            <param-value>1800-6000</param-value>
+        </init-param>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ConfirmRegistrationServlet_HE195117</servlet-name>
+        <url-pattern>/confirmRegistrationServlet_HE195117</url-pattern>
+    </servlet-mapping>
+
+</web-app>

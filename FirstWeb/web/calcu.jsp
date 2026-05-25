@@ -77,15 +77,15 @@
 
             /* Khu vực nút bấm */
             .btn-group {
-                display: grid;
-                grid-template-columns: 1fr 1fr;
+                display: flex;
+                justify-content: center;
                 gap: 12px;
                 margin-top: 24px;
                 margin-bottom: 24px;
             }
 
             .btn {
-                padding: 14px;
+                padding: 14px 28px;
                 font-size: 16px;
                 font-weight: 500;
                 border: none;
@@ -219,7 +219,7 @@
         <div class="main-container">
             <h2>Calculator</h2>
 
-            <form action="calcusevlet_2" method="post">
+            <form action="" method="post">
                 <!-- Ô nhập số x -->
                 <div class="input-group">
                     <label for="numX">Input X</label>
@@ -246,8 +246,6 @@
                 <!-- Bộ đôi nút bấm -->
                 <div class="btn-group">
                     <button type="submit" class="btn btn-calc">Calculator</button>
-                    <!-- Nút reset tải lại trang gốc xóa sạch dữ liệu -->
-                    <a href="calcu.jsp" class="btn btn-reset">Reset</a>
                 </div>
             </form>
 

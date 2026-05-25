@@ -70,15 +70,15 @@
 
             /* Khu vực nút bấm */
             .btn-group {
-                display: grid;
-                grid-template-columns: 1fr 1fr;
+                display: flex;
+                justify-content: center;
                 gap: 12px;
                 margin-top: 24px;
                 margin-bottom: 24px;
             }
 
             .btn {
-                padding: 14px;
+                padding: 14px 28px;
                 font-size: 16px;
                 font-weight: 500;
                 border: none;
@@ -180,16 +180,8 @@
                 <!-- Bộ đôi nút bấm -->
                 <div class="btn-group">
                     <button type="submit" class="btn btn-calc">Calculator</button>
-                    <!-- Nút reset tải lại trang gốc xóa sạch dữ liệu -->
-                    <a href="calcu.html" class="btn btn-reset">Reset</a>
                 </div>
             </form>
-
-            <!-- Box hiển thị đáp án ở dưới cùng -->
-            <div class="result-container">
-                <div class="result-title">Result</div>
-                <div class="result-value"></div>
-            </div>
 
             <a href="index.html" class="btn-home">Back to Home</a>
         </div>
