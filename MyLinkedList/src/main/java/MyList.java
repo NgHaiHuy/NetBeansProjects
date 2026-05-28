@@ -5,6 +5,7 @@
 
 /**
  * Lớp triển khai cấu trúc dữ liệu danh sách liên kết đơn
+ *
  * @author LECOO
  */
 public class MyList {
@@ -24,7 +25,7 @@ public class MyList {
     }
 
     // 1. Thêm vào cuối danh sách
-    public void addLast(int x) {
+    public void addLast(Student x) {
         Node q = new Node(x);
         if (isEmpty()) {
             head = tail = q;
@@ -35,7 +36,7 @@ public class MyList {
     }
 
     // 2. Thêm vào đầu danh sách
-    public void addFirst(int x) {
+    public void addFirst(Student x) {
         Node q = new Node(x);
         if (isEmpty()) {
             head = tail = q;
@@ -46,14 +47,14 @@ public class MyList {
     }
 
     // 3. Thêm nhiều phần tử vào cuối danh sách
-    public void addMany(int a[]) {
-        for (int x : a) {
+    public void addMany(Student a[]) {
+        for (Student x : a) {
             addLast(x);
         }
     }
 
     // 4. Thêm nhiều phần tử vào đầu danh sách (giữ nguyên thứ tự mảng)
-    public void addManyFirst(int a[]) {
+    public void addManyFirst(Student a[]) {
         for (int i = a.length - 1; i >= 0; i--) {
             addFirst(a[i]);
         }
@@ -71,7 +72,9 @@ public class MyList {
 
     // 6. Xóa phần tử ở đầu danh sách
     public void removeFirst() {
-        if (isEmpty()) return;
+        if (isEmpty()) {
+            return;
+        }
         if (head == tail) {
             head = tail = null;
         } else {
@@ -81,7 +84,9 @@ public class MyList {
 
     // 7. Xóa phần tử ở cuối danh sách
     public void removeLast() {
-        if (isEmpty()) return;
+        if (isEmpty()) {
+            return;
+        }
         if (head == tail) {
             head = tail = null;
         } else {
@@ -104,10 +109,12 @@ public class MyList {
     }
 
     // 10. Tìm Node đầu tiên có giá trị bằng x
-    public Node search(int x) {
+    public Node search(Student x) {
         Node p = head;
         while (p != null) {
-            if (p.info == x) return p;
+            if (p.info == x) {
+                return p;
+            }
             p = p.next;
         }
         return null;
@@ -131,11 +138,15 @@ public class MyList {
 
     // 13. Lấy vị trí (index) của Node p
     public int pos(Node p) {
-        if (p == null) return -1;
+        if (p == null) {
+            return -1;
+        }
         int index = 0;
         Node current = head;
         while (current != null) {
-            if (current == p) return index;
+            if (current == p) {
+                return index;
+            }
             index++;
             current = current.next;
         }
@@ -144,10 +155,14 @@ public class MyList {
 
     // 14. Tìm Node đứng ngay trước Node p
     public Node getPrev(Node p) {
-        if (isEmpty() || p == null || p == head) return null;
+        if (isEmpty() || p == null || p == head) {
+            return null;
+        }
         Node current = head;
         while (current != null) {
-            if (current.next == p) return current;
+            if (current.next == p) {
+                return current;
+            }
             current = current.next;
         }
         return null;
@@ -155,11 +170,15 @@ public class MyList {
 
     // 15. Lấy Node tại vị trí index i
     public Node get(int i) {
-        if (i < 0 || isEmpty()) return null;
+        if (i < 0 || isEmpty()) {
+            return null;
+        }
         int count = 0;
         Node current = head;
         while (current != null) {
-            if (count == i) return current;
+            if (count == i) {
+                return current;
+            }
             count++;
             current = current.next;
         }
@@ -167,69 +186,95 @@ public class MyList {
     }
 
     // 16. Chèn giá trị x vào ngay sau Node p
-    public void insertAfter(Node p, int x) {
-        if (p == null) return;
+    public void insertAfter(Node p, Student x) {
+        if (p == null) {
+            return;
+        }
         Node q = new Node(x);
         q.next = p.next;
         p.next = q;
-        if (p == tail) tail = q;
+        if (p == tail) {
+            tail = q;
+        }
     }
 
     // 17. Chèn giá trị x vào ngay trước Node p
-    public void insertBefore(Node p, int x) {
-        if (p == null) return;
+    public void insertBefore(Node p, Student x) {
+        if (p == null) {
+            return;
+        }
         if (p == head) {
             addFirst(x);
         } else {
             Node pre = getPrev(p);
-            if (pre != null) insertAfter(pre, x);
+            if (pre != null) {
+                insertAfter(pre, x);
+            }
         }
     }
 
     // 18. Chèn giá trị x vào vị trí index cụ thể
-    public void insert(int index, int x) {
-        if (index < 0) return;
+    public void insert(int index, Student x) {
+        if (index < 0) {
+            return;
+        }
         if (index == 0) {
             addFirst(x);
         } else {
             Node pre = get(index - 1);
-            if (pre != null) insertAfter(pre, x);
+            if (pre != null) {
+                insertAfter(pre, x);
+            }
         }
     }
 
     // 19. Xóa Node p khỏi danh sách
     public void remove(Node p) {
-        if (isEmpty() || p == null) return;
+        if (isEmpty() || p == null) {
+            return;
+        }
         if (p == head) {
             removeFirst();
         } else {
             Node pre = getPrev(p);
-            if (pre != null) removeAfter(pre);
+            if (pre != null) {
+                removeAfter(pre);
+            }
         }
     }
 
     // 20. Xóa phần tử tại vị trí index
     public void removeIndex(int index) {
-        if (isEmpty() || index < 0) return;
+        if (isEmpty() || index < 0) {
+            return;
+        }
         if (index == 0) {
             removeFirst();
         } else {
             Node pre = get(index - 1);
-            if (pre != null) removeAfter(pre);
+            if (pre != null) {
+                removeAfter(pre);
+            }
         }
     }
 
     // 21. Xóa phần tử đứng sau Node p
     public void removeAfter(Node p) {
-        if (p == null || p == tail || p.next == null) return;
+        if (p == null || p == tail || p.next == null) {
+            return;
+        }
         Node q = p.next;
         p.next = q.next;
-        if (q == tail) tail = p;
+        if (q == tail) {
+            tail = p;
+        }
     }
 
     // 22. Xóa phần tử đứng trước Node p
     public void removeBefore(Node p) {
-        if (isEmpty() || p == null || p == head) return;
+        if (isEmpty() || p == null || p == head) {
+            return;
+        }
         if (head.next == p) {
             removeFirst();
             return;
@@ -237,24 +282,28 @@ public class MyList {
         Node pre = getPrev(p);
         if (pre != null) {
             Node prePre = getPrev(pre);
-            if (prePre != null) removeAfter(prePre);
+            if (prePre != null) {
+                removeAfter(prePre);
+            }
         }
     }
 
     // 23. Cập nhật giá trị của Node p thành x
-    public void set(Node p, int x) {
+    public void set(Node p, Student x) {
         if (p != null) {
             p.info = x;
         }
     }
 
     // 24. Tìm Node có giá trị lớn nhất
-    public Node findMax() {
-        if (isEmpty()) return null;
+    public Node findMaxByMark() {
+        if (isEmpty()) {
+            return null;
+        }
         Node max = head;
         Node cur = head.next;
         while (cur != null) {
-            if (cur.info > max.info) {
+            if (cur.info.mark > max.info.mark) {
                 max = cur;
             }
             cur = cur.next;
@@ -263,25 +312,30 @@ public class MyList {
     }
 
     // 25. Tìm Node có giá trị nhỏ nhất
-    public Node findMin() {
-        if (isEmpty()) return null;
+    public Node findMinByMark() {
+        if (isEmpty()) {
+            return null;
+        }
         Node min = head;
         Node cur = head.next;
         while (cur != null) {
-            if (cur.info < min.info) {
+            if (cur.info.mark < min.info.mark) {
                 min = cur;
             }
             cur = cur.next;
         }
         return min;
     }
+
     // 26. Hoán đổi giá trị của hai Node p và q (swap info)
     public void swap(Node p, Node q) {
-        if (p == null || q == null) return;
-        int temp = p.info;
+        if (p == null || q == null) {
+            return;
+        }
+        Student temp = p.info;
         p.info = q.info;
         q.info = temp;
-    }
+    }/*
 
     // 27. Sắp xếp danh sách từ node st đến node end (inclusive) bằng thuật toán selection sort
     public void sort(Node st, Node end) {
@@ -302,5 +356,36 @@ public class MyList {
             i = i.next;
         }
     }
-}
+     */
 
+    public void sortByMark() {
+        if (isEmpty()) {
+            return;
+        }
+        for (Node i = head; i != null; i = i.next) {
+            Node min = i;
+            for (Node j = i.next; j != null; j = j.next) {
+                if (j.info.sid.compareTo(min.info.sid) < 0) {
+                    min = j;
+                }
+            }
+        }
+    }
+
+    public void sortBySid() {
+        if (isEmpty()) {
+            return;
+        }
+        for (Node i = head; i != null; i = i.next) {
+            Node min = i;
+            for (Node j = i.next; j != null; j = j.next) {
+                if (j.info.sid.compareTo(min.info.sid) < 0) {
+                    min = j;
+                }
+            }
+            if (min != i) {
+                swap(i, min);
+            }
+        }
+    }
+}

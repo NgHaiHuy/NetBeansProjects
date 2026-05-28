@@ -176,12 +176,6 @@
                         double y = Double.parseDouble(txtY);
                         double res = 0;
                         boolean isSuccess = true;
-
-                        switch (selectedOp) {
-                            case "+": res = x + x; break; // Sửa logic tính toán đúng theo toán tử
-                            case "+_real": // Để tránh trùng lặp nhầm lẫn, bên dưới value sẽ đặt chuẩn:
-                                break;
-                        }
                         
                         // Xử lý nhánh switch-case chuẩn xác
                         switch (selectedOp) {
@@ -226,28 +220,32 @@
                     <input type="number" step="any" id="numX" name="numX" class="form-control" required value="<%= txtX %>">
                 </div>
 
-                <!-- Ô chọn phép tính (Dropdown Box) -->
-                <div class="input-group">
-                    <label for="operator">Choose the operation</label>
-                    <select id="operator" name="operator" class="form-control">
-                        <option value="+" <%= "+".equals(selectedOp) ? "selected" : "" %> >Plus (+)</option>
-                        <option value="-" <%= "-".equals(selectedOp) ? "selected" : "" %> >Subtraction (-)</option>
-                        <option value="x" <%= "x".equals(selectedOp) ? "selected" : "" %> >Multiplication (x)</option>
-                        <option value="/" <%= "/".equals(selectedOp) ? "selected" : "" %> >Division (/)</option>
-                    </select>
-                </div>
-
                 <!-- Ô nhập số y -->
                 <div class="input-group">
                     <label for="numY">Input Y</label>
                     <input type="number" step="any" id="numY" name="numY" class="form-control" required value="<%= txtY %>">
                 </div>
 
-                <!-- Bộ đôi nút bấm -->
+                <div class="input-group">
+                    <label for="operator">Choose the operation</label>
+                    <select id="operator" name="operator" class="form-control">
+                        <option value="+" <%= "+".equals(selectedOp) ? "selected" : "" %> >(+)</option>
+                        <option value="-" <%= "-".equals(selectedOp) ? "selected" : "" %> >(-)</option>
+                        <option value="x" <%= "x".equals(selectedOp) ? "selected" : "" %> >(x)</option>
+                        <option value="/" <%= "/".equals(selectedOp) ? "selected" : "" %> >(/)</option>
+                    </select>
+                </div>
+                    
                 <div class="btn-group">
                     <button type="submit" class="btn btn-calc">Calculator</button>
                 </div>
             </form>
+
+            <!-- Box hiển thị đáp án ở dưới cùng -->
+            <div class="result-container">
+                <div class="result-title">Result</div>
+                <div class="result-value"><%= resultStr %></div>
+            </div>
 
             <a href="index.html" class="btn-home">Back to Home</a>
         </div>

@@ -5,12 +5,13 @@
 
 /**
  * Lớp chạy thử nghiệm danh sách liên kết MyList
+ *
  * @author LECOO
  */
 public class Main {
 
     public static void main(String[] args) {
-        MyList a = new MyList();
+        /*MyList a = new MyList();
 
         System.out.println("=== THU NGHIEM KHOI TAO DANH SACH ===");
         System.out.println("Danh sach rong? " + a.isEmpty());
@@ -131,5 +132,58 @@ public class Main {
         System.out.println("- Node co gia tri lon nhat: " + (maxNode != null ? maxNode.info : "null"));
         System.out.println("- Node co gia tri nho nhat: " + (minNode != null ? minNode.info : "null"));
         System.out.println("----------------------------------------");
+        // 7. Thử nghiệm hoán đổi (swap) và sắp xếp (sort)
+        System.out.println("=== THU NGHIEM SWAP & SORT ===");
+        // swap nodes with values 7 and 1 (if they exist)
+        Node node7 = a.search(7);
+        Node node1 = a.search(1);
+        if (node7 != null && node1 != null) {
+            System.out.println("- Trước khi swap:");
+            a.traverse();
+            a.swap(node7, node1);
+            System.out.println("- Sau khi swap (7 <-> 1):");
+            a.traverse();
+        }
+        // sort entire list
+        a.sort(a.getFirst(), a.getLast());
+        System.out.println("- Sau khi sort toàn danh sách:");
+        a.traverse();
+        System.out.println("----------------------------------------");
+    }*/
+
+        MyList a = new MyList();
+        System.out.println(a.isEmpty());
+
+        a.addLast(new Student("he180001", "An", 9.5));
+        a.traverse();
+        System.out.println("**********************************");
+
+        a.addLast(new Student("he190056", "Binh", 5.5));
+        a.traverse();
+        System.out.println("**********************************");
+        //
+        Student b[] = {
+            new Student("he180078", "An", 4.5),
+            new Student("he18123", "Hoang", 9.5),
+            new Student("he180341", "Xuan", 3.5),
+            new Student("he180541", "Thuy", 6.5)
+        };
+        a.addMany(b);
+        a.traverse();
+        System.out.println("**********************************");
+
+        a.addFirst(new Student("he180079", "Ha", 4.5));
+        a.traverse();
+
+        System.out.println("Max of mark is: " + a.findMaxByMark().info);
+        System.out.println("Min of mark is: " + a.findMinByMark().info);
+
+        System.out.println("Sort by mark:");
+        a.sortByMark();
+        a.traverse();
+
+        System.out.println("Sort by id:");
+        a.sortBySid();
+        a.traverse();
     }
 }

@@ -134,17 +134,16 @@
         <div class="login-container">
             <h2>Sign in</h2>
 
-            <!-- Đã thêm action="" (gửi lại chính nó) và method="post" -->
             <form action="" method="post">
 
                 <div class="input-group">
                     <i class="fa-solid fa-user input-icon"></i>
-                    <input type="text" name="Username" placeholder="User name" required>
+                    <input type="text" name="Username" placeholder="User name" value="${param.Username}" required>
                 </div>
 
                 <div class="input-group">
                     <i class="fa-solid fa-lock input-icon"></i>
-                    <input type="password" name="Password" placeholder="Password" required>
+                    <input type="password" name="Password" placeholder="Password" value="${param.Password}" required>
                 </div>
 
                 <button type="submit" class="btn-primary">Login</button>
@@ -160,9 +159,11 @@
                 
                 String user = request.getParameter("Username");
                 String pass = request.getParameter("Password");
+                String validUser = request.getServletContext().getInitParameter("validUser");
+                String validPass = request.getServletContext().getInitParameter("validPass");
                 
-                // Đã sửa thành .equals() và thêm dấu chấm phẩy đầy đủ
-                if ("admin".equals(user) && "123".equals(pass)) {
+                // Mật khẩu kiểm tra phân biệt chữ hoa chữ thường
+                if (pass != null && user != null && pass.equals(validPass) && user.equalsIgnoreCase(validUser)) {
                     out.print("<div class='result-box success'>Hello " + user + "</div>");
                 } else {
                     out.print("<div class='result-box danger'>Wrong user name or password!</div>");

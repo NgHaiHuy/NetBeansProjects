@@ -1,14 +1,15 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 
-/**
- *
- * @author LECOO
- */
 public class Node {
-    int info;
+
+    Student info;
     Node next;
-    Node(int x) { info = x; next = null;}
+
+    public Node(Student x, Node p) {
+        info = x;
+        next = p;
+    }
+
+    public Node(Student x) {
+        this(x, null);
+    }
 }
