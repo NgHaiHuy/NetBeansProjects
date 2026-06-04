@@ -1,6 +1,5 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ * Demo program for MyList with Student objects.
  */
 
 /**
@@ -152,17 +151,16 @@ public class Main {
     }*/
 
         MyList a = new MyList();
-        System.out.println(a.isEmpty());
+        System.out.println("Is list empty? " + a.isEmpty());
+        System.out.println();
 
+        // Add some students
         a.addLast(new Student("he180001", "An", 9.5));
         a.traverse();
         System.out.println("**********************************");
 
         a.addLast(new Student("he190056", "Binh", 5.5));
-        a.traverse();
-        System.out.println("**********************************");
-        //
-        Student b[] = {
+        Student[] b = {
             new Student("he180078", "An", 4.5),
             new Student("he18123", "Hoang", 9.5),
             new Student("he180341", "Xuan", 3.5),
@@ -173,17 +171,29 @@ public class Main {
         System.out.println("**********************************");
 
         a.addFirst(new Student("he180079", "Ha", 4.5));
+
+        System.out.println("--- Initial list ---");
         a.traverse();
+        System.out.println();
 
-        System.out.println("Max of mark is: " + a.findMaxByMark().info);
-        System.out.println("Min of mark is: " + a.findMinByMark().info);
+        System.out.println("Max by mark: " + a.findMaxByMark().info);
+        System.out.println("Min by mark: " + a.findMinByMark().info);
+        System.out.println();
 
-        System.out.println("Sort by mark:");
+        System.out.println("--- Sorted by mark ---");
         a.sortByMark();
         a.traverse();
+        System.out.println();
 
-        System.out.println("Sort by id:");
+        System.out.println("--- Sorted by SID ---");
         a.sortBySid();
+        a.traverse();
+        System.out.println();
+
+        System.out.println("--- Reverse range 0-3 ---");
+        Node st = a.get(0);
+        Node end = a.get(3);
+        a.reverse(st, end);
         a.traverse();
     }
 }

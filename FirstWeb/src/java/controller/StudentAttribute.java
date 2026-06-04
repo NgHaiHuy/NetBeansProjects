@@ -38,7 +38,7 @@ public class StudentAttribute extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet StudentAttribute</title>");            
+            out.println("<title>Servlet StudentAttribute</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet StudentAttribute at " + request.getContextPath() + "</h1>");
@@ -59,12 +59,19 @@ public class StudentAttribute extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        Student a = new Student(0,"Nguyen Van A",(float)3.0);
-        Student b = new Student(1,"Nguyen Van B",(float)4.0);
+        Student a = new Student(0, "Nguyen Van A", (float) 3.0);
+        Student b = new Student(1, "Nguyen Van B", (float) 4.0);
         ArrayList<Student> list = new ArrayList<>();
         list.add(a);
         list.add(b);
-        
+        // Đẩy danh sách vào request với key là "studentList"
+        request.setAttribute("studentList", list);
+        // Also store in session for direct JSP access
+        request.getSession().setAttribute("studentList", list);
+
+        // Chuyển hướng dữ liệu sang file main.jsp (sửa lại tên file .jsp cho đúng thực tế của bạn)
+        request.getRequestDispatcher("main.jsp").forward(request, response);
+
     }
 
     /**

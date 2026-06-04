@@ -11,12 +11,12 @@ public class Student {
 
     String sid;
     String name;
-    Double mark;
+    double mark;
 
     public Student() {
     }
 
-    public Student(String sid, String name, Double mark) {
+    public Student(String sid, String name, double mark) {
         this.sid = sid;
         this.name = name;
         this.mark = mark;
@@ -24,7 +24,15 @@ public class Student {
 
     @Override
     public String toString() {
-        return "Student{" + "sid=" + sid + ", name=" + name + ", mark=" + mark + '}';
+        return "Student{sid='" + sid + "', name='" + name + "', mark='" + mark + "'}";
     }
+
+    // Getters and Setters
+    public String getSid() { return sid; }
+    public void setSid(String sid) { this.sid = sid; }
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
+    public double getMark() { return mark; }
+    public void setMark(double mark) { this.mark = mark; }
 
 }

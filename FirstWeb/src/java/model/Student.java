@@ -9,6 +9,7 @@ package model;
  * @author LECOO
  */
 public class Student {
+
     private int id;
     private String name;
     private float gpa;
@@ -48,6 +49,7 @@ public class Student {
 
     @Override
     public String toString() {
-        return "Student{" + "id=" + id + ", name=" + name + ", gpa=" + gpa + '}';
+        return "ID: " + this.id + " - Name: " + this.name + " - GPA: " + this.gpa;
     }
+
 }

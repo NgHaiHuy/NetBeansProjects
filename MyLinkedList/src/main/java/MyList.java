@@ -357,7 +357,7 @@ public class MyList {
         }
     }
      */
-
+    // Sort mark class student 
     public void sortByMark() {
         if (isEmpty()) {
             return;
@@ -372,6 +372,7 @@ public class MyList {
         }
     }
 
+    // Sort id class student
     public void sortBySid() {
         if (isEmpty()) {
             return;
@@ -387,5 +388,39 @@ public class MyList {
                 swap(i, min);
             }
         }
+    }
+
+    void reverse(Node st, Node end) {
+        Node preSt = getPrev(st);
+        Node nextEnd = getNext(end);
+
+        Node p = st;
+        Node pre = null;
+        Node next = null;
+        end = st;
+        while (p != nextEnd) {
+            next = p.next;
+            p.next = pre;
+            pre = p;
+            p = next;
+        }
+        st = pre;
+        if (preSt == null) {
+            head = st;
+        } else {
+            preSt.next = st;
+        }
+
+        if (nextEnd == null) {
+            tail = end;
+        } else {
+            end.next = nextEnd;
+        }
+    }
+    
+    void reverse(int st,int end){
+        Node p = get(st);
+        Node q = get(end);
+        reverse(p, q);
     }
 }

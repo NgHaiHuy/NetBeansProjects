@@ -10,6 +10,14 @@
         <param-name>validPass</param-name>
         <param-value>123</param-value>
     </context-param>
+    <servlet>
+        <servlet-name>StudentAttribute</servlet-name>
+        <servlet-class>controller.StudentAttribute</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>StudentAttribute</servlet-name>
+        <url-pattern>/StudentAttribute</url-pattern>
+    </servlet-mapping>
     <welcome-file-list>
         <welcome-file>index.html</welcome-file>
     </welcome-file-list>
