@@ -272,4 +272,113 @@ public class MyBST {
             return;
         }
     }
+
+    // Phương thức xóa nút bằng phương pháp sao chép (delete by copying)
+    public void deleteByCopying(int x) {
+        // Kiểm tra nếu cây tìm kiếm nhị phân đang rỗng
+        if (isEmpty()) {
+            System.out.println("BSTree is empty, no deletion");
+            return;
+        }
+        
+        // Tìm kiếm nút cần xóa và nút cha của nó
+        Node deleteNode;
+        Node parentOfDeleteNode;
+        deleteNode = root;
+        parentOfDeleteNode = null;
+        while (deleteNode != null) {
+            if (deleteNode.info == x) {
+                break; // Tìm thấy nút có giá trị x
+            }
+            
+            // Tiếp tục tìm kiếm trên cây tìm kiếm nhị phân
+            if (x < deleteNode.info) {
+                parentOfDeleteNode = deleteNode;
+                deleteNode = deleteNode.left; // Đi sang trái nếu x nhỏ hơn nút hiện tại
+            } else {
+                parentOfDeleteNode = deleteNode;
+                deleteNode = deleteNode.right; // Đi sang phải nếu x lớn hơn hoặc bằng nút hiện tại
+            }
+        }
+        
+        // Kiểm tra xem có tìm thấy nút cần xóa hay không
+        if (deleteNode == null) {
+            System.out.println("The key " + x + " does not exist, no deletion");
+            return;
+        }
+        
+        // Trường hợp 1: Xóa nút lá (không có con trái và con phải)
+        if (deleteNode.left == null && deleteNode.right == null) {
+            // Kiểm tra xem nút cần xóa có phải là nút gốc hay không
+            if (parentOfDeleteNode == null) {
+                root = null;
+            } else {
+                if (parentOfDeleteNode.left == deleteNode) {
+                    parentOfDeleteNode.left = null;
+                } else {
+                    parentOfDeleteNode.right = null;
+                }
+            }
+            return;
+        }
+        
+        // Trường hợp 2: Xóa nút chỉ có con bên trái (con phải là null)
+        if (deleteNode.left != null && deleteNode.right == null) {
+            // Kiểm tra xem nút cần xóa có phải là nút gốc hay không
+            if (parentOfDeleteNode == null) {
+                root = deleteNode.left;
+            } else {
+                if (parentOfDeleteNode.left == deleteNode) {
+                    parentOfDeleteNode.left = deleteNode.left;
+                } else {
+                    parentOfDeleteNode.right = deleteNode.left;
+                }
+            }
+            deleteNode.left = null;
+            return;
+        }
+        
+        // Trường hợp 3: Xóa nút chỉ có con bên phải (con trái là null)
+        if (deleteNode.left == null && deleteNode.right != null) {
+            // Kiểm tra xem nút cần xóa có phải là nút gốc hay không
+            if (parentOfDeleteNode == null) {
+                root = deleteNode.right;
+            } else {
+                if (parentOfDeleteNode.left == deleteNode) {
+                    parentOfDeleteNode.left = deleteNode.right;
+                } else {
+                    parentOfDeleteNode.right = deleteNode.right;
+                }
+            }
+            deleteNode.right = null;
+            return;
+        }
+        
+        // Trường hợp 4: Xóa nút có cả con bên trái và con bên phải
+        if (deleteNode.left != null && deleteNode.right != null) {
+            Node parentReplaceNode; // Nút cha của nút thay thế (replaceNode)
+            Node replaceNode;       // Nút ngoài cùng bên phải của cây con bên trái (nút lớn nhất bên trái)
+            
+            // Tìm nút ngoài cùng bên phải trên cây con bên trái của deleteNode
+            parentReplaceNode = null;
+            replaceNode = deleteNode.left;
+            while (replaceNode.right != null) {
+                parentReplaceNode = replaceNode;
+                replaceNode = replaceNode.right; // Đi sâu xuống bên phải để tìm nút lớn nhất
+            }
+            
+            // Sao chép dữ liệu của replaceNode đè lên deleteNode
+            deleteNode.info = replaceNode.info;
+            
+            if (parentReplaceNode == null) {
+                // Trường hợp đặc biệt: replaceNode chính là con bên trái trực tiếp của deleteNode
+                deleteNode.left = replaceNode.left;
+            } else {
+                // Trường hợp thông thường: replaceNode nằm sâu bên phải, gán con trái của replaceNode cho cha của nó
+                parentReplaceNode.right = replaceNode.left;
+            }
+            replaceNode.left = null;
+            return;
+        }
+    }
 }

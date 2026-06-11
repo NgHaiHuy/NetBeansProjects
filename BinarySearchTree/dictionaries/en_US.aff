@@ -1,0 +1,61 @@
+# 2024-01-29 (Marco A.G.Pinto)
+# - Fix: apostrophe handling, by adding: WORDCHARS 0123456789’ to the .aff.
+#
+
+SET UTF-8
+TRY esianrtolcdugmphbyfvkwzESIANRTOLCDUGMPHBYFVKWZ'
+ICONV 1
+ICONV ’ '
+NOSUGGEST !
+
+# ordinal numbers
+COMPOUNDMIN 1
+# only in compounds: 1th, 2th, 3th
+ONLYINCOMPOUND c
+# compound rules:
+# 1. [0-9]*1[0-9]th (10th, 11th, 12th, 56714th, etc.)
+# 2. [0-9]*[02-9](1st|2nd|3rd|[4-9]th) (21st, 22nd, 123rd, 1234th, etc.)
+COMPOUNDRULE 2
+COMPOUNDRULE n*1t
+COMPOUNDRULE n*mp
+WORDCHARS 0123456789’
+
+PFX A Y 1
+PFX A   0     re         .
+
+PFX I Y 1
+PFX I   0     in         .
+
+PFX U Y 1
+PFX U   0     un         .
+
+PFX C Y 1
+PFX C   0     de          .
+
+PFX E Y 1
+PFX E   0     dis         .
+
+PFX F Y 1
+PFX F   0     con         .
+
+PFX K Y 1
+PFX K   0     pro         .
+
+SFX V N 2
+SFX V   e     ive        e
+SFX V   0     ive        [^e]
+
+SFX N Y 3
+SFX N   e     ion        e
+SFX N   y     ication    y 
+SFX N   0     en         [^ey] 
+
+SFX X Y 3
+SFX X   e     ions       e
+SFX X   y     ications   y
+SFX X   0     ens        [^ey]
+
+SFX H N 2
+SFX H   y     ieth       y
+SFX 
+

@@ -48,5 +48,11 @@ public class Main {
         // bstree.deleteByMerging(15);
         // bstree.breadth();
         // System.out.println();
+
+        // Test xóa node bằng phương thức sao chép (Delete by copying)
+        // System.out.println("Delete by copying: node has both left and right child 15");
+        // bstree.deleteByCopying(15);
+        // bstree.breadth();
+        // System.out.println();
     }
 }
