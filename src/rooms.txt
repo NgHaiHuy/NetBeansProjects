@@ -1,4 +1,0 @@
-R101|Room 101|Dorm A|1|double|4|0|150.00
-R102|Room 102|Dorm A|1|triple|6|0|100.00
-R201|Room 201|Dorm B|2|double|4|0|160.00
-R202|Room 202|Dorm B|2|triple|6|0|110.00

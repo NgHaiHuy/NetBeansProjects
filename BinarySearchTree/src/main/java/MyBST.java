@@ -1,3 +1,4 @@
+
 /**
  * Lớp đại diện cho Cây Tìm kiếm Nhị phân (Binary Search Tree - BST).
  * Các nút trên cây được tổ chức sao cho:
@@ -24,7 +25,7 @@ public class MyBST {
 
     /**
      * Kiểm tra xem cây có đang rỗng hay không.
-     * 
+     *
      * @return true nếu cây rỗng (root là null), ngược lại trả về false.
      */
     public boolean isEmpty() {
@@ -33,7 +34,7 @@ public class MyBST {
 
     /**
      * Chèn một giá trị nguyên x vào cây tìm kiếm nhị phân.
-     * 
+     *
      * @param x Giá trị cần chèn vào cây
      */
     public void insert(int x) {
@@ -78,7 +79,7 @@ public class MyBST {
 
     /**
      * Chèn nhiều phần tử từ một mảng số nguyên vào cây.
-     * 
+     *
      * @param a Mảng các số nguyên cần chèn
      */
     public void insertMany(int[] a) {
@@ -89,7 +90,7 @@ public class MyBST {
 
     /**
      * In ra màn hình giá trị của một nút.
-     * 
+     *
      * @param p Nút cần in giá trị
      */
     public void visit(Node p) {
@@ -97,8 +98,9 @@ public class MyBST {
     }
 
     /**
-     * Duyệt cây theo chiều rộng (Breadth-first traversal / Level-order traversal).
-     * Thuật toán sử dụng một hàng đợi (Queue) để duyệt từng tầng của cây từ trên xuống dưới, từ trái qua phải.
+     * Duyệt cây theo chiều rộng (Breadth-first traversal / Level-order
+     * traversal). Thuật toán sử dụng một hàng đợi (Queue) để duyệt từng tầng
+     * của cây từ trên xuống dưới, từ trái qua phải.
      */
     public void breadth() {
         // Nếu cây rỗng thì không cần duyệt
@@ -132,7 +134,9 @@ public class MyBST {
 
     // Duyệt theo thứ tự trước NLR (Tiền thứ tự) - Duyệt theo chiều sâu (Depth-first traversal)
     public void preOrder(Node p) {
-        if (p == null) return;
+        if (p == null) {
+            return;
+        }
         visit(p); // Thăm nút hiện tại
         preOrder(p.left); // Duyệt cây con bên trái
         preOrder(p.right); // Duyệt cây con bên phải
@@ -140,7 +144,9 @@ public class MyBST {
 
     // Duyệt theo thứ tự giữa LNR (Trung thứ tự) - Duyệt theo chiều sâu (Depth-first traversal)
     public void inOrder(Node p) {
-        if (p == null) return;
+        if (p == null) {
+            return;
+        }
         inOrder(p.left); // Duyệt cây con bên trái
         visit(p); // Thăm nút hiện tại
         inOrder(p.right); // Duyệt cây con bên phải
@@ -148,7 +154,9 @@ public class MyBST {
 
     // Duyệt theo thứ tự sau LRN (Hậu thứ tự) - Duyệt theo chiều sâu (Depth-first traversal)
     public void postOrder(Node p) {
-        if (p == null) return;
+        if (p == null) {
+            return;
+        }
         postOrder(p.left); // Duyệt cây con bên trái
         postOrder(p.right); // Duyệt cây con bên phải
         visit(p); // Thăm nút hiện tại
@@ -161,7 +169,7 @@ public class MyBST {
             System.out.println("BSTree is empty, no deletion");
             return;
         }
-        
+
         // Tìm kiếm nút cần xóa và nút cha của nó
         Node deleteNode;
         Node parentOfDeleteNode;
@@ -180,13 +188,13 @@ public class MyBST {
                 deleteNode = deleteNode.right; // Đi sang phải nếu giá trị cần tìm lớn hơn nút hiện tại
             }
         }
-        
+
         // Kiểm tra xem có tìm thấy giá trị x hay không
         if (deleteNode == null) {
             System.out.println("The key " + x + " does not exist, no deletion");
             return;
         }
-        
+
         // Trường hợp 1: Xóa nút lá (không có con trái và con phải)
         if (deleteNode.left == null && deleteNode.right == null) {
             // Kiểm tra xem nút cần xóa có phải là nút gốc hay không
@@ -201,7 +209,7 @@ public class MyBST {
             }
             return;
         }
-        
+
         // Trường hợp 2: Xóa nút chỉ có con bên trái (con phải là null)
         if (deleteNode.left != null && deleteNode.right == null) {
             // Kiểm tra xem nút cần xóa có phải là nút gốc hay không
@@ -217,7 +225,7 @@ public class MyBST {
             deleteNode.left = null;
             return;
         }
-        
+
         // Trường hợp 3: Xóa nút chỉ có con bên phải (con trái là null)
         if (deleteNode.left == null && deleteNode.right != null) {
             // Kiểm tra xem nút cần xóa có phải là nút gốc hay không
@@ -233,23 +241,23 @@ public class MyBST {
             deleteNode.right = null;
             return;
         }
-        
+
         // Trường hợp 4: Xóa nút có cả con bên trái và con bên phải
         if (deleteNode.left != null && deleteNode.right != null) {
             Node rightOfDeleteNode;
             Node replaceNode; // Nút ngoài cùng bên phải của cây con bên trái (sẽ thay thế vị trí deleteNode)
-            
+
             // Tìm nút ngoài cùng bên phải trên cây con bên trái của deleteNode
             rightOfDeleteNode = deleteNode.right;
             replaceNode = deleteNode.left;
             while (replaceNode.right != null) {
                 replaceNode = replaceNode.right;
             }
-            
+
             replaceNode.right = rightOfDeleteNode; // Liên kết cây con bên phải của deleteNode vào nút thay thế
             deleteNode.right = null;
             // Lúc này deleteNode chỉ còn cây con bên trái
-            
+
             // Kiểm tra xem nút cần xóa có phải là nút gốc hay không
             if (parentOfDeleteNode == null) {
                 root = deleteNode.left;

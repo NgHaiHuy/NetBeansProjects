@@ -1,4 +1,0 @@
-S001|John Doe|2004
-S002|Jane Smith|2005
-S003|Bob Johnson|2006
-S004|Alice Williams|2003
