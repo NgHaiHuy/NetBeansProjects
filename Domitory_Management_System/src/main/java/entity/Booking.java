@@ -1,24 +1,18 @@
 package entity;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 // Lop dai dien cho 1 lan dat phong (booking)
 public class Booking {
 
-    private String rcode;  // Ma phong duoc dat
-    private String scode;  // Ma sinh vien dat phong
-    private Date bdate;    // Ngay dat phong
-    private Date ldate;    // Ngay tra phong (null neu chua tra)
-    private int state;     // Trang thai: 1 = dang o, 0 = da tra
-
-    // Dinh dang ngay thang: ngay/thang/nam
-    private static final SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+    private String rcode;       // Ma phong duoc dat
+    private String scode;       // Ma sinh vien dat phong
+    private String bdate;       // Ngay dat phong (dd/MM/yyyy)
+    private String ldate;       // Ngay tra phong (dd/MM/yyyy hoac "null")
+    private BookingState state; // Trang thai: ACTIVE (dang o), LEFT (da tra)
 
     public Booking() {
     }
 
-    public Booking(String rcode, String scode, Date bdate, Date ldate, int state) {
+    public Booking(String rcode, String scode, String bdate, String ldate, BookingState state) {
         this.rcode = rcode;
         this.scode = scode;
         this.bdate = bdate;
@@ -42,35 +36,33 @@ public class Booking {
         this.scode = scode;
     }
 
-    public Date getBdate() {
+    public String getBdate() {
         return bdate;
     }
 
-    public void setBdate(Date bdate) {
+    public void setBdate(String bdate) {
         this.bdate = bdate;
     }
 
-    public Date getLdate() {
+    public String getLdate() {
         return ldate;
     }
 
-    public void setLdate(Date ldate) {
+    public void setLdate(String ldate) {
         this.ldate = ldate;
     }
 
-    public int getState() {
+    public BookingState getState() {
         return state;
     }
 
-    public void setState(int state) {
+    public void setState(BookingState state) {
         this.state = state;
     }
 
     @Override
     public String toString() {
-        String bdateStr = bdate != null ? sdf.format(bdate) : "null";
-        String ldateStr = ldate != null ? sdf.format(ldate) : "null";
         return String.format("%-10s | %-10s | %-12s | %-12s | %-5d",
-                rcode, scode, bdateStr, ldateStr, state);
+                rcode, scode, bdate, ldate, state.getCode());
     }
 }

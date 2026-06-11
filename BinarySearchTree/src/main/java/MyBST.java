@@ -129,4 +129,139 @@ public class MyBST {
             }
         }
     }
+
+    // Duyệt theo thứ tự trước NLR (Tiền thứ tự) - Duyệt theo chiều sâu (Depth-first traversal)
+    public void preOrder(Node p) {
+        if (p == null) return;
+        visit(p); // Thăm nút hiện tại
+        preOrder(p.left); // Duyệt cây con bên trái
+        preOrder(p.right); // Duyệt cây con bên phải
+    }
+
+    // Duyệt theo thứ tự giữa LNR (Trung thứ tự) - Duyệt theo chiều sâu (Depth-first traversal)
+    public void inOrder(Node p) {
+        if (p == null) return;
+        inOrder(p.left); // Duyệt cây con bên trái
+        visit(p); // Thăm nút hiện tại
+        inOrder(p.right); // Duyệt cây con bên phải
+    }
+
+    // Duyệt theo thứ tự sau LRN (Hậu thứ tự) - Duyệt theo chiều sâu (Depth-first traversal)
+    public void postOrder(Node p) {
+        if (p == null) return;
+        postOrder(p.left); // Duyệt cây con bên trái
+        postOrder(p.right); // Duyệt cây con bên phải
+        visit(p); // Thăm nút hiện tại
+    }
+
+    // Phương thức xóa nút bằng cách hợp nhất (delete by merging)
+    public void deleteByMerging(int x) {
+        // Kiểm tra nếu cây tìm kiếm nhị phân đang rỗng
+        if (isEmpty()) {
+            System.out.println("BSTree is empty, no deletion");
+            return;
+        }
+        
+        // Tìm kiếm nút cần xóa và nút cha của nó
+        Node deleteNode;
+        Node parentOfDeleteNode;
+        deleteNode = root;
+        parentOfDeleteNode = null;
+        while (deleteNode != null) {
+            if (deleteNode.info == x) {
+                break; // Tìm thấy nút có giá trị x
+            }
+            // Tiếp tục tìm kiếm
+            if (x < deleteNode.info) {
+                parentOfDeleteNode = deleteNode;
+                deleteNode = deleteNode.left; // Đi sang trái nếu giá trị cần tìm nhỏ hơn nút hiện tại
+            } else {
+                parentOfDeleteNode = deleteNode;
+                deleteNode = deleteNode.right; // Đi sang phải nếu giá trị cần tìm lớn hơn nút hiện tại
+            }
+        }
+        
+        // Kiểm tra xem có tìm thấy giá trị x hay không
+        if (deleteNode == null) {
+            System.out.println("The key " + x + " does not exist, no deletion");
+            return;
+        }
+        
+        // Trường hợp 1: Xóa nút lá (không có con trái và con phải)
+        if (deleteNode.left == null && deleteNode.right == null) {
+            // Kiểm tra xem nút cần xóa có phải là nút gốc hay không
+            if (parentOfDeleteNode == null) {
+                root = null;
+            } else {
+                if (parentOfDeleteNode.left == deleteNode) {
+                    parentOfDeleteNode.left = null;
+                } else {
+                    parentOfDeleteNode.right = null;
+                }
+            }
+            return;
+        }
+        
+        // Trường hợp 2: Xóa nút chỉ có con bên trái (con phải là null)
+        if (deleteNode.left != null && deleteNode.right == null) {
+            // Kiểm tra xem nút cần xóa có phải là nút gốc hay không
+            if (parentOfDeleteNode == null) {
+                root = deleteNode.left;
+            } else {
+                if (parentOfDeleteNode.left == deleteNode) {
+                    parentOfDeleteNode.left = deleteNode.left;
+                } else {
+                    parentOfDeleteNode.right = deleteNode.left;
+                }
+            }
+            deleteNode.left = null;
+            return;
+        }
+        
+        // Trường hợp 3: Xóa nút chỉ có con bên phải (con trái là null)
+        if (deleteNode.left == null && deleteNode.right != null) {
+            // Kiểm tra xem nút cần xóa có phải là nút gốc hay không
+            if (parentOfDeleteNode == null) {
+                root = deleteNode.right;
+            } else {
+                if (parentOfDeleteNode.left == deleteNode) {
+                    parentOfDeleteNode.left = deleteNode.right;
+                } else {
+                    parentOfDeleteNode.right = deleteNode.right;
+                }
+            }
+            deleteNode.right = null;
+            return;
+        }
+        
+        // Trường hợp 4: Xóa nút có cả con bên trái và con bên phải
+        if (deleteNode.left != null && deleteNode.right != null) {
+            Node rightOfDeleteNode;
+            Node replaceNode; // Nút ngoài cùng bên phải của cây con bên trái (sẽ thay thế vị trí deleteNode)
+            
+            // Tìm nút ngoài cùng bên phải trên cây con bên trái của deleteNode
+            rightOfDeleteNode = deleteNode.right;
+            replaceNode = deleteNode.left;
+            while (replaceNode.right != null) {
+                replaceNode = replaceNode.right;
+            }
+            
+            replaceNode.right = rightOfDeleteNode; // Liên kết cây con bên phải của deleteNode vào nút thay thế
+            deleteNode.right = null;
+            // Lúc này deleteNode chỉ còn cây con bên trái
+            
+            // Kiểm tra xem nút cần xóa có phải là nút gốc hay không
+            if (parentOfDeleteNode == null) {
+                root = deleteNode.left;
+            } else {
+                if (parentOfDeleteNode.left == deleteNode) {
+                    parentOfDeleteNode.left = deleteNode.left;
+                } else {
+                    parentOfDeleteNode.right = deleteNode.left;
+                }
+            }
+            deleteNode.left = null;
+            return;
+        }
+    }
 }

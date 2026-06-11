@@ -24,6 +24,28 @@ public class Main {
         System.out.println("Breadth first BSTree:");
         bstree.breadth();
         System.out.println(); // In dòng trống xuống hàng
+
+        // Thực hiện duyệt cây theo tiền thứ tự (Pre-order NLR)
+        System.out.println();
+        System.out.println("PreOrder (NLR) BSTree");
+        bstree.preOrder(bstree.root);
+        System.out.println();
+
+        // Thực hiện duyệt cây theo trung thứ tự (In-order LNR)
+        System.out.println("InOrder (LNR) BSTree");
+        bstree.inOrder(bstree.root);
+        System.out.println();
+
+        // Thực hiện duyệt cây theo hậu thứ tự (Post-order LRN)
+        System.out.println("PostOrder (LRN) BSTree");
+        bstree.postOrder(bstree.root);
+        System.out.println();
+
+        // Test xóa node bằng phương thức hợp nhất (Delete by merging)
+        // System.out.println("Delete by merging: node has both left and right child 15");
+        // bstree.deleteByMerging(15);
+        // bstree.breadth();
+        // System.out.println();
     }
 }
 

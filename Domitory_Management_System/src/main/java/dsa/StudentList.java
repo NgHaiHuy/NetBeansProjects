@@ -4,45 +4,11 @@ import entity.Student;
 import java.io.*;
 
 // Danh sach lien ket don chua cac sinh vien (Student)
-public class StudentList {
-    private Node<Student> head; // Node dau danh sach
-    private Node<Student> tail; // Node cuoi danh sach
+public class StudentList extends MyLinkedList<Student> {
 
     // Khoi tao danh sach rong
     public StudentList() {
-        head = tail = null;
-    }
-
-    // Kiem tra danh sach rong
-    public boolean isEmpty() {
-        return head == null;
-    }
-
-    // Xoa toan bo danh sach
-    public void clear() {
-        head = tail = null;
-    }
-
-    // Them sinh vien vao cuoi danh sach
-    public void addLast(Student student) {
-        Node<Student> newNode = new Node<>(student);
-        if (isEmpty()) {
-            head = tail = newNode;
-        } else {
-            tail.next = newNode;
-            tail = newNode;
-        }
-    }
-
-    // Dem so luong phan tu
-    public int size() {
-        int count = 0;
-        Node<Student> current = head;
-        while (current != null) {
-            count++;
-            current = current.next;
-        }
-        return count;
+        super();
     }
 
     // Tim sinh vien theo ma sinh vien (scode)
@@ -119,17 +85,14 @@ public class StudentList {
         }
     }
 
-    // Lay node dau danh sach
-    public Node<Student> getHead() {
-        return head;
-    }
-
-    // Doc du lieu sinh vien tu file
-    public void loadFromFile(String filename) throws IOException {
+    // Doc du lieu sinh vien tu file.
+    // Tra ve so luong sinh vien load duoc, hoac -1 neu file khong ton tai.
+    public int loadFromFile(String filename) throws IOException {
         clear();
         File file = new File(filename);
-        if (!file.exists()) return;
+        if (!file.exists()) return -1;
 
+        int count = 0;
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             String line;
             while ((line = br.readLine()) != null) {
@@ -138,13 +101,25 @@ public class StudentList {
 
                 String[] parts = line.split("\\s*\\|\\s*");
                 if (parts.length >= 3) {
-                    String scode = parts[0].trim();
-                    String name = parts[1].trim();
-                    int byear = Integer.parseInt(parts[2].trim());
-                    addLast(new Student(scode, name, byear));
+                    try {
+                        String scode = parts[0].trim();
+                        String name = parts[1].trim();
+                        int byear = Integer.parseInt(parts[2].trim());
+                        if (scode.isEmpty() || name.isEmpty()) {
+                            System.err.println("Warning: Skipping line with empty fields: " + line);
+                            continue;
+                        }
+                        addLast(new Student(scode, name, byear));
+                        count++;
+                    } catch (NumberFormatException e) {
+                        System.err.println("Warning: Skipping malformed line (invalid birth year): " + line);
+                    }
+                } else {
+                    System.err.println("Warning: Skipping line with insufficient fields: " + line);
                 }
             }
         }
+        return count;
     }
 
     // Ghi du lieu sinh vien ra file

@@ -4,75 +4,11 @@ import entity.Room;
 import java.io.*;
 
 // Danh sach lien ket don chua cac phong (Room)
-public class RoomList {
-    private Node<Room> head; // Node dau danh sach
-    private Node<Room> tail; // Node cuoi danh sach
+public class RoomList extends MyLinkedList<Room> {
 
     // Khoi tao danh sach rong
     public RoomList() {
-        head = tail = null;
-    }
-
-    // Kiem tra danh sach rong
-    public boolean isEmpty() {
-        return head == null;
-    }
-
-    // Xoa toan bo danh sach
-    public void clear() {
-        head = tail = null;
-    }
-
-    // Them phong vao cuoi danh sach
-    public void addLast(Room room) {
-        Node<Room> newNode = new Node<>(room);
-        if (isEmpty()) {
-            head = tail = newNode;  // Danh sach rong -> node moi la ca head va tail
-        } else {
-            tail.next = newNode;    // Noi node moi vao sau tail
-            tail = newNode;         // Cap nhat tail
-        }
-    }
-
-    // Them phong vao dau danh sach
-    public void addFirst(Room room) {
-        Node<Room> newNode = new Node<>(room);
-        if (isEmpty()) {
-            head = tail = newNode;
-        } else {
-            newNode.next = head;    // Node moi tro toi head cu
-            head = newNode;         // Cap nhat head
-        }
-    }
-
-    // Dem so luong phan tu trong danh sach
-    public int size() {
-        int count = 0;
-        Node<Room> current = head;
-        while (current != null) {
-            count++;
-            current = current.next;
-        }
-        return count;
-    }
-
-    // Them phong truoc vi tri k (k tinh tu 0)
-    public boolean addBefore(Room room, int k) {
-        int n = size();
-        if (k < 0 || k > n) return false;     // Vi tri khong hop le
-        if (k == 0) { addFirst(room); return true; }  // Them vao dau
-        if (k == n) { addLast(room); return true; }   // Them vao cuoi
-
-        // Di chuyen den vi tri k-1
-        Node<Room> newNode = new Node<>(room);
-        Node<Room> current = head;
-        for (int i = 0; i < k - 1; i++) {
-            current = current.next;
-        }
-        // Chen node moi vao giua
-        newNode.next = current.next;
-        current.next = newNode;
-        return true;
+        super();
     }
 
     // Tim phong theo ma phong (rcode)
@@ -121,36 +57,6 @@ public class RoomList {
         return false;  // Khong tim thay
     }
 
-    // Xoa phong tai vi tri k (k tinh tu 0)
-    public boolean deleteAt(int k) {
-        int n = size();
-        if (k < 0 || k >= n) return false;
-
-        // Xoa node dau
-        if (k == 0) {
-            if (head == tail) {
-                head = tail = null;
-            } else {
-                head = head.next;
-            }
-            return true;
-        }
-
-        // Di chuyen den vi tri k-1
-        Node<Room> current = head;
-        for (int i = 0; i < k - 1; i++) {
-            current = current.next;
-        }
-        // Xoa node tai vi tri k
-        if (current.next == tail) {
-            tail = current;
-            tail.next = null;
-        } else {
-            current.next = current.next.next;
-        }
-        return true;
-    }
-
     // Tim cac phong co ten chua chuoi 'name'
     public RoomList searchByName(String name) {
         RoomList result = new RoomList();
@@ -165,26 +71,83 @@ public class RoomList {
         return result;
     }
 
-    // Sap xep danh sach tang dan theo rcode (Selection Sort)
+    // =========================================================================
+    // THUẬT TOÁN SẮP XẾP MERGE SORT O(N LOG N) TRÊN SINGLY LINKED LIST (ROOMS)
+    // =========================================================================
+
+    // Hàm gọi chính để sắp xếp danh sách phòng tăng dần theo rcode
     public void sortByRcode() {
         if (isEmpty() || head.next == null) return;
+        
+        // Gọi đệ quy Merge Sort để sắp xếp lại chuỗi Node và cập nhật head mới
+        head = mergeSort(head);
 
-        // Vong lap ngoai: chon tung vi tri
-        for (Node<Room> pi = head; pi.next != null; pi = pi.next) {
-            Node<Room> minNode = pi;
-            // Vong lap trong: tim phan tu nho nhat con lai
-            for (Node<Room> pj = pi.next; pj != null; pj = pj.next) {
-                if (pj.info.getRcode().compareToIgnoreCase(minNode.info.getRcode()) < 0) {
-                    minNode = pj;
-                }
-            }
-            // Doi cho du lieu giua 2 node
-            if (minNode != pi) {
-                Room temp = pi.info;
-                pi.info = minNode.info;
-                minNode.info = temp;
+        // Duyệt tìm Node cuối cùng sau khi đã sắp xếp để cập nhật lại con trỏ tail
+        Node<Room> current = head;
+        while (current != null && current.next != null) {
+            current = current.next;
+        }
+        tail = current;
+    }
+
+    // Hàm đệ quy thực hiện thuật toán chia để trị (Divide and Conquer)
+    private Node<Room> mergeSort(Node<Room> h) {
+        // Trường hợp cơ sở: Danh sách rỗng hoặc chỉ có 1 phần tử thì không cần sắp xếp
+        if (h == null || h.next == null) {
+            return h;
+        }
+
+        // Bước 1: Tìm Node ở chính giữa danh sách để chia đôi
+        Node<Room> middle = getMiddle(h);
+        Node<Room> nextOfMiddle = middle.next;
+
+        // Bước 2: Tách đôi danh sách bằng cách ngắt kết nối tại vị trí giữa
+        middle.next = null;
+
+        // Bước 3: Đệ quy sắp xếp nửa bên trái và nửa bên phải
+        Node<Room> left = mergeSort(h);
+        Node<Room> right = mergeSort(nextOfMiddle);
+
+        // Bước 4: Trộn (Merge) hai nửa đã được sắp xếp lại với nhau theo thứ tự tăng dần
+        return sortedMerge(left, right);
+    }
+
+    // Hàm trộn hai danh sách liên kết đơn đã được sắp xếp thành một danh sách duy nhất
+    private Node<Room> sortedMerge(Node<Room> a, Node<Room> b) {
+        Node<Room> result;
+        
+        // Nếu một trong hai nửa rỗng, trả về nửa còn lại
+        if (a == null) return b;
+        if (b == null) return a;
+
+        // So sánh mã phòng (rcode) không phân biệt chữ hoa/thường để sắp xếp tăng dần
+        if (a.info.getRcode().compareToIgnoreCase(b.info.getRcode()) <= 0) {
+            result = a;
+            // Đệ quy ghép phần còn lại của danh sách a với danh sách b
+            result.next = sortedMerge(a.next, b);
+        } else {
+            result = b;
+            // Đệ quy ghép danh sách a với phần còn lại của danh sách b
+            result.next = sortedMerge(a, b.next);
+        }
+        return result;
+    }
+
+    // Hàm tìm Node ở giữa bằng kỹ thuật "con trỏ nhanh và chậm" (Runner Technique)
+    private Node<Room> getMiddle(Node<Room> h) {
+        if (h == null) return h;
+        Node<Room> fast = h.next; // Con trỏ nhanh di chuyển 2 bước mỗi lần
+        Node<Room> slow = h;      // Con trỏ chậm di chuyển 1 bước mỗi lần
+
+        while (fast != null) {
+            fast = fast.next;
+            if (fast != null) {
+                slow = slow.next;
+                fast = fast.next;
             }
         }
+        // Khi con trỏ nhanh đi hết danh sách, con trỏ chậm sẽ dừng đúng ở giữa
+        return slow;
     }
 
     // Hien thi toan bo danh sach phong
@@ -205,38 +168,49 @@ public class RoomList {
         }
     }
 
-    // Lay node dau danh sach
-    public Node<Room> getHead() {
-        return head;
-    }
-
-    // Doc du lieu phong tu file
-    public void loadFromFile(String filename) throws IOException {
+    // Doc du lieu phong tu file.
+    // Tra ve so luong phong load duoc, hoac -1 neu file khong ton tai.
+    public int loadFromFile(String filename) throws IOException {
         clear();
         File file = new File(filename);
-        if (!file.exists()) return;
+        if (!file.exists()) return -1;
 
+        int count = 0;
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             String line;
             while ((line = br.readLine()) != null) {
                 line = line.trim();
-                if (line.isEmpty() || line.startsWith("#")) continue; // Bo dong trong va dong comment
+                if (line.isEmpty() || line.startsWith("#")) continue;
 
                 // Tach cac truong bang dau "|"
                 String[] parts = line.split("\\s*\\|\\s*");
                 if (parts.length >= 8) {
-                    String rcode = parts[0].trim();
-                    String name = parts[1].trim();
-                    String dom = parts[2].trim();
-                    String floor = parts[3].trim();
-                    String type = parts[4].trim();
-                    int beds = Integer.parseInt(parts[5].trim());
-                    int booked = Integer.parseInt(parts[6].trim());
-                    double price = Double.parseDouble(parts[7].trim());
-                    addLast(new Room(rcode, name, dom, floor, type, beds, booked, price));
+                    try {
+                        String rcode = parts[0].trim();
+                        String name = parts[1].trim();
+                        String dom = parts[2].trim();
+                        String floor = parts[3].trim();
+                        String type = parts[4].trim();
+                        int beds = Integer.parseInt(parts[5].trim());
+                        int booked = Integer.parseInt(parts[6].trim());
+                        double price = Double.parseDouble(parts[7].trim());
+
+                        if (rcode.isEmpty() || name.isEmpty() || dom.isEmpty() || floor.isEmpty() || type.isEmpty()) {
+                            System.err.println("Warning: Skipping line with empty fields: " + line);
+                            continue;
+                        }
+
+                        addLast(new Room(rcode, name, dom, floor, type, beds, booked, price));
+                        count++;
+                    } catch (NumberFormatException e) {
+                        System.err.println("Warning: Skipping malformed line (invalid numeric format): " + line);
+                    }
+                } else {
+                    System.err.println("Warning: Skipping line with insufficient fields: " + line);
                 }
             }
         }
+        return count;
     }
 
     // Ghi du lieu phong ra file

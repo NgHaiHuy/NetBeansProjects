@@ -1,73 +1,25 @@
 package dsa;
 
 import entity.Booking;
+import entity.BookingState;
 import java.io.*;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 // Danh sach lien ket don chua cac booking (dat phong)
-public class BookingList {
-    private Node<Booking> head; // Node dau danh sach
-    private Node<Booking> tail; // Node cuoi danh sach
-    private static final SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+public class BookingList extends MyLinkedList<Booking> {
 
     // Khoi tao danh sach rong
     public BookingList() {
-        head = tail = null;
+        super();
     }
 
-    // Kiem tra danh sach rong
-    public boolean isEmpty() {
-        return head == null;
-    }
-
-    // Xoa toan bo danh sach
-    public void clear() {
-        head = tail = null;
-    }
-
-    // Them booking vao dau danh sach (dung khi dat phong moi)
-    public void addFirst(Booking booking) {
-        Node<Booking> newNode = new Node<>(booking);
-        if (isEmpty()) {
-            head = tail = newNode;
-        } else {
-            newNode.next = head;
-            head = newNode;
-        }
-    }
-
-    // Them booking vao cuoi danh sach (dung khi doc tu file)
-    public void addLast(Booking booking) {
-        Node<Booking> newNode = new Node<>(booking);
-        if (isEmpty()) {
-            head = tail = newNode;
-        } else {
-            tail.next = newNode;
-            tail = newNode;
-        }
-    }
-
-    // Dem so luong booking
-    public int size() {
-        int count = 0;
-        Node<Booking> current = head;
-        while (current != null) {
-            count++;
-            current = current.next;
-        }
-        return count;
-    }
-
-    // Tim booking dang hoat dong (state=1) theo rcode va scode
+    // Tim booking dang hoat dong (state=ACTIVE) theo rcode va scode
     public Booking searchActiveBooking(String rcode, String scode) {
         Node<Booking> current = head;
         while (current != null) {
             Booking b = current.info;
             if (b.getRcode().equalsIgnoreCase(rcode.trim()) &&
                 b.getScode().equalsIgnoreCase(scode.trim()) &&
-                b.getState() == 1) {
+                b.getState() == BookingState.ACTIVE) {
                 return b;  // Tim thay booking dang hoat dong
             }
             current = current.next;
@@ -75,12 +27,12 @@ public class BookingList {
         return null;  // Khong tim thay
     }
 
-    // Kiem tra sinh vien co dang o phong nao khong (co booking state=1)
+    // Kiem tra sinh vien co dang o phong nao khong (co booking state=ACTIVE)
     public boolean hasActiveBooking(String scode) {
         Node<Booking> current = head;
         while (current != null) {
             Booking b = current.info;
-            if (b.getScode().equalsIgnoreCase(scode.trim()) && b.getState() == 1) {
+            if (b.getScode().equalsIgnoreCase(scode.trim()) && b.getState() == BookingState.ACTIVE) {
                 return true;  // Sinh vien dang o 1 phong
             }
             current = current.next;
@@ -132,32 +84,97 @@ public class BookingList {
         }
     }
 
-    // Sap xep giam dan theo rcode, neu rcode bang nhau thi giam dan theo scode
-    // Su dung Selection Sort
+    // =========================================================================
+    // THUẬT TOÁN SẮP XẾP MERGE SORT O(N LOG N) TRÊN SINGLY LINKED LIST (BOOKINGS)
+    // Sắp xếp giảm dần theo rcode, nếu rcode trùng nhau thì giảm dần theo scode
+    // =========================================================================
+
+    // Hàm gọi chính để sắp xếp danh sách booking
     public void sortByRcodeAndScodeDesc() {
         if (isEmpty() || head.next == null) return;
+        
+        // Gọi đệ quy để sắp xếp và cập nhật head mới
+        head = mergeSort(head);
 
-        for (Node<Booking> pi = head; pi.next != null; pi = pi.next) {
-            Node<Booking> maxNode = pi;
-            for (Node<Booking> pj = pi.next; pj != null; pj = pj.next) {
-                // So sanh rcode giam dan
-                int rcodeComp = pj.info.getRcode().compareToIgnoreCase(maxNode.info.getRcode());
-                if (rcodeComp > 0) {
-                    maxNode = pj;
-                } else if (rcodeComp == 0) {
-                    // Neu rcode bang nhau, so sanh scode giam dan
-                    if (pj.info.getScode().compareToIgnoreCase(maxNode.info.getScode()) > 0) {
-                        maxNode = pj;
-                    }
-                }
-            }
-            // Doi cho du lieu
-            if (maxNode != pi) {
-                Booking temp = pi.info;
-                pi.info = maxNode.info;
-                maxNode.info = temp;
+        // Cập nhật lại con trỏ tail của danh sách sau khi sắp xếp
+        Node<Booking> current = head;
+        while (current != null && current.next != null) {
+            current = current.next;
+        }
+        tail = current;
+    }
+
+    // Hàm đệ quy chia để trị
+    private Node<Booking> mergeSort(Node<Booking> h) {
+        // Trường hợp cơ sở: danh sách rỗng hoặc chỉ có 1 phần tử
+        if (h == null || h.next == null) {
+            return h;
+        }
+
+        // Bước 1: Tìm Node ở giữa danh sách
+        Node<Booking> middle = getMiddle(h);
+        Node<Booking> nextOfMiddle = middle.next;
+
+        // Bước 2: Ngắt kết nối để chia danh sách làm hai nửa độc lập
+        middle.next = null;
+
+        // Bước 3: Đệ quy sắp xếp từng nửa
+        Node<Booking> left = mergeSort(h);
+        Node<Booking> right = mergeSort(nextOfMiddle);
+
+        // Bước 4: Trộn hai nửa đã sắp xếp theo thứ tự giảm dần
+        return sortedMerge(left, right);
+    }
+
+    // Hàm trộn hai nửa đã sắp xếp giảm dần theo tiêu chí: rcode giảm dần, scode giảm dần
+    private Node<Booking> sortedMerge(Node<Booking> a, Node<Booking> b) {
+        if (a == null) return b;
+        if (b == null) return a;
+
+        Node<Booking> result;
+        
+        // So sánh mã phòng (rcode) của a và b
+        int rcodeComp = a.info.getRcode().compareToIgnoreCase(b.info.getRcode());
+        boolean aGreater = false;
+        
+        if (rcodeComp > 0) {
+            // Nếu rcode của a lớn hơn b (thứ tự bảng chữ cái đứng sau), a đi trước (giảm dần)
+            aGreater = true;
+        } else if (rcodeComp == 0) {
+            // Nếu mã phòng trùng nhau, tiếp tục so sánh mã sinh viên (scode)
+            int scodeComp = a.info.getScode().compareToIgnoreCase(b.info.getScode());
+            if (scodeComp >= 0) {
+                // Nếu scode của a lớn hơn hoặc bằng b, a đi trước (giảm dần)
+                aGreater = true;
             }
         }
+
+        // Thực hiện trộn đệ quy dựa trên kết quả so sánh
+        if (aGreater) {
+            result = a;
+            result.next = sortedMerge(a.next, b);
+        } else {
+            result = b;
+            result.next = sortedMerge(a, b.next);
+        }
+        return result;
+    }
+
+    // Hàm tìm Node chính giữa bằng kỹ thuật hai con trỏ Runner
+    private Node<Booking> getMiddle(Node<Booking> h) {
+        if (h == null) return h;
+        Node<Booking> fast = h.next; // Con trỏ nhanh chạy 2 bước
+        Node<Booking> slow = h;      // Con trỏ chậm chạy 1 bước
+
+        while (fast != null) {
+            fast = fast.next;
+            if (fast != null) {
+                slow = slow.next;
+                fast = fast.next;
+            }
+        }
+        // Con trỏ chậm dừng ở Node chính giữa
+        return slow;
     }
 
     // Hien thi toan bo danh sach booking
@@ -176,17 +193,14 @@ public class BookingList {
         }
     }
 
-    // Lay node dau danh sach
-    public Node<Booking> getHead() {
-        return head;
-    }
-
-    // Doc du lieu booking tu file
-    public void loadFromFile(String filename) throws IOException {
+    // Doc du lieu booking tu file.
+    // Tra ve so luong booking load duoc, hoac -1 neu file khong ton tai.
+    public int loadFromFile(String filename) throws IOException {
         clear();
         File file = new File(filename);
-        if (!file.exists()) return;
+        if (!file.exists()) return -1;
 
+        int count = 0;
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             String line;
             while ((line = br.readLine()) != null) {
@@ -195,27 +209,46 @@ public class BookingList {
 
                 String[] parts = line.split("\\s*\\|\\s*");
                 if (parts.length >= 5) {
-                    String rcode = parts[0].trim();
-                    String scode = parts[1].trim();
+                    try {
+                        String rcode = parts[0].trim();
+                        String scode = parts[1].trim();
 
-                    // Doc ngay dat phong
-                    Date bdate = null;
-                    try { bdate = sdf.parse(parts[2].trim()); }
-                    catch (ParseException e) { /* bo qua loi */ }
+                        if (rcode.isEmpty() || scode.isEmpty()) {
+                            System.err.println("Warning: Skipping line with empty codes: " + line);
+                            continue;
+                        }
 
-                    // Doc ngay tra phong (co the la "null")
-                    Date ldate = null;
-                    String ldateStr = parts[3].trim();
-                    if (!ldateStr.equalsIgnoreCase("null") && !ldateStr.isEmpty()) {
-                        try { ldate = sdf.parse(ldateStr); }
-                        catch (ParseException e) { /* bo qua loi */ }
+                        // Doc ngay dat phong
+                        String bdate = parts[2].trim();
+                        if (!bdate.matches("\\d{2}/\\d{2}/\\d{4}")) {
+                            System.err.println("Warning: Skipping malformed line (invalid booking date format, expected dd/MM/yyyy): " + line);
+                            continue;
+                        }
+
+                        // Doc ngay tra phong (co the la "null")
+                        String ldate = parts[3].trim();
+                        if (!ldate.equalsIgnoreCase("null") && !ldate.isEmpty()) {
+                            if (!ldate.matches("\\d{2}/\\d{2}/\\d{4}")) {
+                                System.err.println("Warning: Skipping malformed line (invalid leave date format, expected dd/MM/yyyy): " + line);
+                                continue;
+                            }
+                        } else {
+                            ldate = "null";
+                        }
+
+                        int stateCode = Integer.parseInt(parts[4].trim());
+                        BookingState state = BookingState.fromCode(stateCode);
+                        addLast(new Booking(rcode, scode, bdate, ldate, state));
+                        count++;
+                    } catch (NumberFormatException e) {
+                        System.err.println("Warning: Skipping malformed line (invalid state value): " + line);
                     }
-
-                    int state = Integer.parseInt(parts[4].trim());
-                    addLast(new Booking(rcode, scode, bdate, ldate, state));
+                } else {
+                    System.err.println("Warning: Skipping line with insufficient fields: " + line);
                 }
             }
         }
+        return count;
     }
 
     // Ghi du lieu booking ra file
@@ -224,10 +257,8 @@ public class BookingList {
             Node<Booking> current = head;
             while (current != null) {
                 Booking b = current.info;
-                String bdateStr = b.getBdate() != null ? sdf.format(b.getBdate()) : "null";
-                String ldateStr = b.getLdate() != null ? sdf.format(b.getLdate()) : "null";
                 pw.println(String.format("%s | %s | %s | %s | %d",
-                        b.getRcode(), b.getScode(), bdateStr, ldateStr, b.getState()));
+                        b.getRcode(), b.getScode(), b.getBdate(), b.getLdate(), b.getState().getCode()));
                 current = current.next;
             }
         }

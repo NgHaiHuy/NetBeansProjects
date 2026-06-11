@@ -18,8 +18,14 @@ import model.Category;
  */
 public class CategoryDAO extends DBContext {
 
+    private String lastError = null;
+
     public Map<Integer, Category> getAllCategories() {
         Map<Integer, Category> listC = new HashMap<>();
+        if (connection == null) {
+            lastError = "Connection object is null! DBContext failed to connect to the database.";
+            return listC;
+        }
         try {
             String sql = "select * from Categories";
             Statement st = connection.createStatement();
@@ -34,8 +40,28 @@ public class CategoryDAO extends DBContext {
             st.close();
 
         } catch (Exception e) {
+            lastError = (e.getMessage() != null) ? e.getMessage() : e.toString();
             System.out.println(e.getMessage());
         }
         return listC;
+    }
+
+    public String getLastError() {
+        return lastError;
+    }
+
+    public java.util.List<String> getAllTableNames() {
+        java.util.List<String> tables = new java.util.ArrayList<>();
+        try {
+            java.sql.DatabaseMetaData meta = connection.getMetaData();
+            ResultSet rs = meta.getTables(null, null, "%", new String[]{"TABLE"});
+            while (rs.next()) {
+                tables.add(rs.getString("TABLE_NAME"));
+            }
+            rs.close();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return tables;
     }
 }
