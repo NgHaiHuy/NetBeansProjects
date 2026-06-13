@@ -1,9 +1,8 @@
 package entity;
 
-// Lop dai dien cho 1 phong trong ky tuc xa
 public class Room {
 
-    private String rcode;   // Ma phong (duy nhat)
+    private String rcode;   // Ma phong (Key)
     private String name;    // Ten phong
     private String dom;     // Ten ky tuc xa
     private String floor;   // Tang

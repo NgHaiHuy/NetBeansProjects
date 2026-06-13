@@ -1,6 +1,5 @@
 package entity;
 
-// Lop dai dien cho 1 lan dat phong (booking)
 public class Booking {
 
     private String rcode;       // Ma phong duoc dat

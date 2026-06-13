@@ -3,7 +3,7 @@ package dsa;
 import entity.Room;
 import java.io.*;
 
-// Danh sach lien ket don chua cac phong (Room)
+// Danh sach lien ket don chua cac phong
 public class RoomList extends MyLinkedList<Room> {
 
     // Khoi tao danh sach rong
@@ -15,7 +15,7 @@ public class RoomList extends MyLinkedList<Room> {
     public Node<Room> searchByRcode(String rcode) {
         Node<Room> current = head;
         while (current != null) {
-            if (current.info.getRcode().equalsIgnoreCase(rcode.trim())) {
+            if (current.info.getRcode().equalsIgnoreCase(rcode.trim())) { // .equalsIgnoreCase() La so sanh khong phan biet hoa hay thuong
                 return current;  // Tim thay
             }
             current = current.next;

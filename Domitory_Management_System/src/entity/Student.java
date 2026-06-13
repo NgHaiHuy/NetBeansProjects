@@ -1,9 +1,8 @@
 package entity;
 
-// Lop dai dien cho 1 sinh vien
 public class Student {
 
-    private String scode;  // Ma sinh vien (duy nhat)
+    private String scode;  // Ma sinh vien (Key)
     private String name;   // Ten sinh vien
     private int byear;     // Nam sinh (phai du 18 tuoi)
 
